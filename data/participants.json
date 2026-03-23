@@ -11,11 +11,13 @@
     "status": "separados",
     "bio": "Conocido por su icónico grito '¡Estefaníaaaa!' en la hoguera, uno de los momentos más virales de la TV española. Llegó con su novia Fani tras años de relación.",
     "image": "https://album.mediaset.es/cimg/807010/2020/01/08/isla1_93db.jpg",
-    "social": { "instagram": "christoferlopez" }
+    "social": {
+      "instagram": "christoferlopez"
+    }
   },
   {
     "id": "p-002",
-    "name": "Fani (Estefanía Carbajo)",
+    "name": "Fani",
     "slug": "fani",
     "age": 30,
     "origin": "Madrid",
@@ -25,7 +27,9 @@
     "status": "separados",
     "bio": "Protagonista de una de las tramas más polémicas de la T1. Se acercó al tentador Rubén, lo que provocó la mítica reacción de Christofer en la hoguera.",
     "image": "https://album.mediaset.es/cimg/807010/2020/01/08/isla1_93db.jpg",
-    "social": { "instagram": "fanicarbajo" }
+    "social": {
+      "instagram": "fanicarbajo"
+    }
   },
   {
     "id": "p-003",
@@ -39,7 +43,9 @@
     "status": "separados",
     "bio": "Entró con Susana Molina como pareja. Se acercó a la tentadora Katerina durante la experiencia, lo que terminó con Susana decidiendo marcharse sola.",
     "image": "",
-    "social": { "instagram": "gonzalomontoya7" }
+    "social": {
+      "instagram": "gonzalomontoya7"
+    }
   },
   {
     "id": "p-004",
@@ -53,7 +59,9 @@
     "status": "separados",
     "bio": "Ganadora de Gran Hermano 14, llegó a la isla con su novio Gonzalo. Decidió marcharse sola tras ver las imágenes de Gonzalo con Katerina, una decisión que fue muy aplaudida.",
     "image": "",
-    "social": { "instagram": "susana_bicho90" }
+    "social": {
+      "instagram": "susana_bicho90"
+    }
   },
   {
     "id": "p-005",
@@ -151,7 +159,9 @@
     "status": "separados",
     "bio": "Protagonista de una de las tramas más dramáticas de la T2. Inició una relación con la tentadora Sandra Pica mientras su novia Melyssa sufría en la otra villa.",
     "image": "",
-    "social": { "instagram": "tombrusse" }
+    "social": {
+      "instagram": "tombrusse"
+    }
   },
   {
     "id": "p-012",
@@ -165,7 +175,9 @@
     "status": "separados",
     "bio": "Vivió una de las rupturas más emotivas del programa al descubrir la infidelidad de Tom con Sandra Pica. Su fortaleza la convirtió en una de las favoritas del público.",
     "image": "",
-    "social": { "instagram": "melyssagrh" }
+    "social": {
+      "instagram": "melyssagrh"
+    }
   },
   {
     "id": "p-013",
@@ -179,7 +191,9 @@
     "status": "separados",
     "bio": "Decidió marcharse sola de la isla en una de las decisiones más empoderadas de la temporada 2. Su independencia fue muy aplaudida.",
     "image": "",
-    "social": { "instagram": "melodiepenalver" }
+    "social": {
+      "instagram": "melodiepenalver"
+    }
   },
   {
     "id": "p-014",
@@ -193,7 +207,9 @@
     "status": "separados",
     "bio": "Su relación con Lester fue una de las más turbulentas de la T2. Posteriormente se ha convertido en una de las colaboradoras más populares de Mediaset.",
     "image": "",
-    "social": { "instagram": "martapenateamador" }
+    "social": {
+      "instagram": "martapenateamador"
+    }
   },
   {
     "id": "p-015",
@@ -263,7 +279,9 @@
     "status": "separados",
     "bio": "Se involucró con el tentador Carlos durante la T3. Su personalidad directa la convirtió en una de las protagonistas de la temporada.",
     "image": "",
-    "social": { "instagram": "lolamencia" }
+    "social": {
+      "instagram": "lolamencia"
+    }
   },
   {
     "id": "p-020",
