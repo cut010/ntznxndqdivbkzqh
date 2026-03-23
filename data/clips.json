@@ -1,0 +1,114 @@
+[
+  {
+    "id": "clip-001",
+    "title": "¡Estefaníaaaa!",
+    "desc": "El grito de Christofer al ver las imágenes de Fani con Rubén. El momento más viral de la historia del programa.",
+    "season": "1",
+    "category": "momentos",
+    "image": "https://album.mediaset.es/cimg/807010/2020/02/03/isla8b_8744.jpg",
+    "video": {
+      "normal": "",
+      "backup": ""
+    },
+    "tags": ["viral", "hoguera", "christofer", "fani"],
+    "views": 4800000
+  },
+  {
+    "id": "clip-002",
+    "title": "Fani y Rubén en la piscina",
+    "desc": "La escena de la piscina entre Fani y el tentador Rubén que cambió el rumbo de la primera temporada.",
+    "season": "1",
+    "category": "momentos",
+    "image": "https://album.mediaset.es/cimg/807010/2020/01/22/isla5_cc34.jpg",
+    "video": {
+      "normal": "",
+      "backup": ""
+    },
+    "tags": ["fani", "ruben", "tentacion"],
+    "views": 3200000
+  },
+  {
+    "id": "clip-003",
+    "title": "Susana dice adiós a Gonzalo",
+    "desc": "Susana Molina decide marcharse sola de la isla tras ver las imágenes de Gonzalo con Katerina.",
+    "season": "1",
+    "category": "momentos",
+    "image": "https://album.mediaset.es/cimg/807010/2020/02/11/isla10_d813.jpg",
+    "video": {
+      "normal": "",
+      "backup": ""
+    },
+    "tags": ["susana", "gonzalo", "hoguera-final", "ruptura"],
+    "views": 2800000
+  },
+  {
+    "id": "clip-004",
+    "title": "Tom Brusse y Sandra Pica",
+    "desc": "La traición de Tom a Melyssa con la tentadora Sandra Pica, uno de los momentos más comentados de la T2.",
+    "season": "2",
+    "category": "momentos",
+    "image": "",
+    "video": {
+      "normal": "",
+      "backup": ""
+    },
+    "tags": ["tom", "melyssa", "sandra-pica", "infidelidad"],
+    "views": 3500000
+  },
+  {
+    "id": "clip-005",
+    "title": "Melyssa rompe a llorar",
+    "desc": "El derrumbe emocional de Melyssa al descubrir la infidelidad de Tom en la hoguera.",
+    "season": "2",
+    "category": "momentos",
+    "image": "",
+    "video": {
+      "normal": "",
+      "backup": ""
+    },
+    "tags": ["melyssa", "hoguera", "lagrimas"],
+    "views": 2900000
+  },
+  {
+    "id": "clip-006",
+    "title": "Manuel pillado con Fiama",
+    "desc": "Las imágenes de Manuel siendo infiel con la tentadora Fiama que escandalizaron a toda España.",
+    "season": "3",
+    "category": "momentos",
+    "image": "",
+    "video": {
+      "normal": "",
+      "backup": ""
+    },
+    "tags": ["manuel", "fiama", "infidelidad", "t3"],
+    "views": 3100000
+  },
+  {
+    "id": "clip-007",
+    "title": "Lucía se enfrenta a Manuel",
+    "desc": "La confrontación épica de Lucía pidiendo explicaciones a Manuel por su infidelidad. Un momento para la historia.",
+    "season": "3",
+    "category": "momentos",
+    "image": "",
+    "video": {
+      "normal": "",
+      "backup": ""
+    },
+    "tags": ["lucia", "manuel", "confrontacion", "hoguera"],
+    "views": 3800000
+  },
+  {
+    "id": "clip-008",
+    "title": "La huida de Montoya",
+    "desc": "Montoya emprende una huida desesperada hacia Villa Playa tras ver las imágenes en directo de Anita en la T8.",
+    "season": "8",
+    "category": "momentos",
+    "image": "https://album.mediaset.es/cimg/2025/02/03/lidlt-6_da39-3.jpg",
+    "video": {
+      "normal": "",
+      "backup": ""
+    },
+    "tags": ["montoya", "anita", "huida", "t8", "viral"],
+    "views": 1500000
+  }
+]

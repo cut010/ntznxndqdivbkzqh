@@ -1,0 +1,17 @@
+{
+  "name": "lidlt-data",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate": "tsx scripts/validate.ts",
+    "generate:manifest": "tsx scripts/generate-manifest.ts",
+    "generate:search-index": "tsx scripts/generate-search-index.ts",
+    "check": "npm run validate && npm run generate:manifest"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0",
+    "zod": "^3.22.0"
+  }
+}
