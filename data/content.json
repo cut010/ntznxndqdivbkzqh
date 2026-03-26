@@ -3052,25 +3052,6 @@
           ],
           "title": "El debate de las tentaciones 3",
           "desc": "Tras ese primer beso con Anita en el jacuzzi, Manuel se sienta hoy en plató para enfrentarse a todas las imágenes que ya hemos visto, y algunas nuevas, y responder a todas las preguntas. Pero ojo, porque tenemos una nueva infidelidad en la isla. ¿Quién habrá caído en la tentación? Entérate en \"El debate de las tentaciones', en exclusiva en mitele PLUS."
-        },
-        {
-          "content": "video",
-          "season": "8",
-          "image": "https://album.mediaset.es/cimg/2025/01/29/debate4plus_da39.jpg",
-          "contentId": "4",
-          "category": "debates",
-          "id": "MDSEPS20250124_10033",
-          "video": [
-            {
-              "url": "https://vbdk.mediasetinfinity.es/orivod/vod/bitmovin/57/ba/57bad4e9-d34b-4337-a90d-a1054760e07a/hls-fairplay.ism/picky.m3u8",
-              "label": "Principal",
-              "type": "hls",
-              "cast": false,
-              "extension": true
-            }
-          ],
-          "title": "El debate de las tentaciones 4",
-          "desc": "Tras decir adiós a \"La isla de las Tentaciones', Alba se sienta en el plató del Debate. ¿Se arrepiente de algo? En el programa de hoy veremos una secuencia inédita de su hoguera de confrontación con Gerard que nos va a dejar sin palabras. Además, las dudas de Anita tras su beso y la conversación más sincera de Montoya con Gabriela."
         }
       ]
     }
@@ -3124,25 +3105,6 @@
       "video": [],
       "title": "Síguenos en Instagram 🔜",
       "desc": "En las próximas horas, la web dejará de estar accesible. Gracias por haber estado ahí🫶"
-    },
-    {
-      "content": "video",
-      "season": "8",
-      "image": "https://album.mediaset.es/cimg/2025/01/29/debate4plus_da39.jpg",
-      "contentId": "4",
-      "category": "debates",
-      "id": "MDSEPS20250124_10033",
-      "video": [
-        {
-          "url": "https://vbdk.mediasetinfinity.es/orivod/vod/bitmovin/57/ba/57bad4e9-d34b-4337-a90d-a1054760e07a/hls-fairplay.ism/picky.m3u8",
-          "label": "Principal",
-          "type": "hls",
-          "cast": false,
-          "extension": true
-        }
-      ],
-      "title": "El debate de las tentaciones 4",
-      "desc": "Tras decir adiós a \"La isla de las Tentaciones', Alba se sienta en el plató del Debate. ¿Se arrepiente de algo? En el programa de hoy veremos una secuencia inédita de su hoguera de confrontación con Gerard que nos va a dejar sin palabras. Además, las dudas de Anita tras su beso y la conversación más sincera de Montoya con Gabriela."
     },
     {
       "content": "video",
