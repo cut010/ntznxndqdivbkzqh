@@ -877,7 +877,17 @@
             }
           ],
           "title": "Programa 0",
-          "desc": "El Paraíso vuelve a encender la hoguera y son muchos los valientes que quieren pisarlo. Más de 300 parejas quieren poner a prueba su relación y más de 1.000 solteros y solteras han participado en el casting para convertirse en los seductores que quieren encontrar el amor. Esta es la historia de las nuevas parejas que se embarca en esta aventura. ¿Conseguirán superar a la tentación y demostrar que su amor puede con todo?"
+          "desc": "El Paraíso vuelve a encender la hoguera y son muchos los valientes que quieren pisarlo. Más de 300 parejas quieren poner a prueba su relación y más de 1.000 solteros y solteras han participado en el casting para convertirse en los seductores que quieren encontrar el amor. Esta es la historia de las nuevas parejas que se embarca en esta aventura. ¿Conseguirán superar a la tentación y demostrar que su amor puede con todo?",
+          "p2p": {
+            "enabled": true,
+            "swarm_id": "s4-programas-0",
+            "tracker_urls": [
+              "wss://tracker.openwebtorrent.com",
+              "wss://tracker.btorrent.xyz",
+              "wss://tracker.files.fm:7073/announce"
+            ],
+            "magnet": "magnet:?xt=urn:btih:YXXIDIFPWNGD7TAJN7PLA674XL3P2EIF&dn=anhqv-1x-5&tr=http%3A%2F%2Fbt1.archive.org%3A6969%2Fannounce"
+          }
         },
         {
           "content": "video",
