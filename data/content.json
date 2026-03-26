@@ -3719,9 +3719,9 @@
               "extension": true
             },
             {
-              "url": "//ok.ru/videoembed/10968073833110",
+              "url": "https://ok.ru/videoembed/10968073833110",
               "label": "Backup",
-              "type": "iframe",
+              "type": "embed",
               "cast": false,
               "extension": false
             }
