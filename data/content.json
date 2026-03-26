@@ -199,6 +199,34 @@
       },
       "id": "T08",
       "title": "Temporada 8"
+    },
+    {
+      "content": "temporadas",
+      "tabs": [
+        {
+          "title": "Programas",
+          "id": "programas",
+          "cover": "",
+          "enable": true
+        },
+        {
+          "title": "Debates",
+          "id": "debates",
+          "cover": "",
+          "enable": true
+        }
+      ],
+      "tv": {
+        "debates": "",
+        "programas": ""
+      },
+      "season": "9",
+      "cover": {
+        "debates": "",
+        "programas": "https://album.mediaset.es/cimg/2025/11/03/lidlt-t9-01_da39.jpg"
+      },
+      "id": "T09",
+      "title": "Temporada 9"
     }
   ],
   "content": {
@@ -3052,6 +3080,713 @@
           ],
           "title": "El debate de las tentaciones 3",
           "desc": "Tras ese primer beso con Anita en el jacuzzi, Manuel se sienta hoy en plató para enfrentarse a todas las imágenes que ya hemos visto, y algunas nuevas, y responder a todas las preguntas. Pero ojo, porque tenemos una nueva infidelidad en la isla. ¿Quién habrá caído en la tentación? Entérate en \"El debate de las tentaciones', en exclusiva en mitele PLUS."
+        },
+        {
+          "content": "video",
+          "season": "8",
+          "image": "https://album.mediaset.es/cimg/2025/01/29/debate4plus_da39.jpg",
+          "contentId": "4",
+          "category": "debates",
+          "id": "MDSEPS20250124_10033",
+          "video": [
+            {
+              "url": "https://vbdk.mediasetinfinity.es/orivod/vod/bitmovin/57/ba/57bad4e9-d34b-4337-a90d-a1054760e07a/hls-fairplay.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "El debate de las tentaciones 4",
+          "desc": "Tras decir adiós a \"La isla de las Tentaciones', Alba se sienta en el plató del Debate. ¿Se arrepiente de algo? En el programa de hoy veremos una secuencia inédita de su hoguera de confrontación con Gerard que nos va a dejar sin palabras. Además, las dudas de Anita tras su beso y la conversación más sincera de Montoya con Gabriela."
+        }
+      ]
+    },
+    "9": {
+      "programas": [
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/11/03/lidlt-t9-01_da39.jpg",
+          "contentId": "1",
+          "category": "programas",
+          "id": "MDSVOD20251103_10027",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/a0/5a/a05aa603-5440-482a-81a6-12c895c506b7/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            },
+            {
+              "url": "//ok.ru/videoembed/10180391078550",
+              "label": "Backup",
+              "type": "iframe",
+              "cast": false,
+              "extension": false
+            },
+            {
+              "url": "//ok.ru/videoembed/10182863817366",
+              "label": "Backup",
+              "type": "iframe",
+              "cast": false,
+              "extension": false
+            },
+            {
+              "url": "//ok.ru/videoembed/10182871878294",
+              "label": "Backup",
+              "type": "iframe",
+              "cast": false,
+              "extension": false
+            },
+            {
+              "url": "//ok.ru/videoembed/10182928241046",
+              "label": "Backup",
+              "type": "iframe",
+              "cast": false,
+              "extension": false
+            },
+            {
+              "url": "//ok.ru/videoembed/10182931255702",
+              "label": "Backup",
+              "type": "iframe",
+              "cast": false,
+              "extension": false
+            },
+            {
+              "url": "//ok.ru/videoembed/10182931452310",
+              "label": "Backup",
+              "type": "iframe",
+              "cast": false,
+              "extension": false
+            }
+          ],
+          "title": "Programa 1",
+          "desc": "Juanpi y Sandra, Gilberty Claudia, Lorenzo y Nieves, Rodri y Helena, y Darío y Almudena conforman las cinco parejas que en esta novena edición de \"La isla de las tentaciones' lucharán por demostrar que su amor está por encima de todo. El primer contacto con sus tentadores y tentadoras puede cambiarlo todo."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/11/03/lidlt-t9-02_da39.jpg",
+          "contentId": "2",
+          "category": "programas",
+          "id": "MDSVOD20251104_10005",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/07/63/076316c9-aa0f-4cbe-b861-69f9f9bcefd2/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            },
+            {
+              "url": "//ok.ru/videoembed/10180652436118",
+              "label": "Backup",
+              "type": "iframe",
+              "cast": false,
+              "extension": false
+            }
+          ],
+          "title": "Programa 2",
+          "desc": "La tentación ya ha desplegado sus armas en busca del amor, pero aún hay cartas por destapar y todo se puede complicar más. Las afinidades entre los tentadores y las parejas han empezado a surgir y los celos no han tardado en aparecer en uno y otro bando."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/11/04/lidlt-t9-03_da39.jpg",
+          "contentId": "3",
+          "category": "programas",
+          "id": "MDSVOD20251105_10013",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/97/f9/97f9c6d7-c6f8-4e06-bbc3-02fe61e41ae9/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            },
+            {
+              "url": "//ok.ru/videoembed/10180720462486",
+              "label": "Backup",
+              "type": "iframe",
+              "cast": false,
+              "extension": false
+            }
+          ],
+          "title": "Programa 3",
+          "desc": "Después de instalarse en sus respectivas villas, las parejas se enfrentan al primer gran reto de su experiencia: elegir al soltero o soltera con quien compartirán su primera cita en la isla. Las conexiones entre los tentadores y las parejas van creciendo, y en su misma medida lo hacen los celos y la inseguridad."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/11/10/lidlt-t9-04_da39.jpg",
+          "contentId": "4",
+          "category": "programas",
+          "id": "MDSVOD20251110_10021",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/2f/96/2f96474f-c3c1-40da-b3ab-6bcd90490966/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "Programa 4",
+          "desc": "Tras lo sucedido en la ceremonia de collares, serán los propios protagonistas quienes decidan qué pareja abandona precipitadamente la experiencia. Previamente, los chicos verán imágenes de sus novias y la luz de la tentación volverá a hacer acto de presencia."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/11/11/lidlt-t9-05_da39.jpg",
+          "contentId": "5",
+          "category": "programas",
+          "id": "MDSVOD20251111_10159",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/1d/02/1d02179b-b1fa-444f-af76-442b48ab4577/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "Programa 5",
+          "desc": "Después de intentar controlar sus impulsos durante un tiempo, Claudia ha sucumbido a su deseo por Gerard y ha caído en la tentación en un momento en que varios acercamientos están empezando a ser muy peligrosos."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/11/12/lidlt-t9-06_da39.jpg",
+          "contentId": "6",
+          "category": "programas",
+          "id": "MDSVOD20251112_10018",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/86/70/867058e3-d1e2-4d0d-9f7d-05c340ee8cec/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "Programa 6",
+          "desc": "La primera hoguera para las chicas puede suponer que todo cambie a partir de este momento ya que muchas de las imágenes que tienen preparadas quizás hagan que su actitud cambie de ahora en adelante. Además, Álvaro regresa a la isla..."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/11/15/lidlt-t9-07_da39-2.jpg",
+          "contentId": "7",
+          "category": "programas",
+          "id": "MDSVOD20251117_10143",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/9e/72/9e726d8f-1f3d-4018-a309-3d6e38620dde/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "Programa 7",
+          "desc": "Las imágenes que los chicos verán en su primera hoguera generarán impacto, desazón y momentos de alta tensión especialmente en Gilbert, que perderá el control y protagonizará una situación inédita en la presente edición tras descubrir el apasionado beso de Claudia con Gerard en el jacuzzi. Tras este primer visionado, la nueva pareja formada por Álvaro y Mayeli se sumará a las villas."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/11/18/lidlt-t9-08_da39.jpg",
+          "contentId": "8",
+          "category": "programas",
+          "id": "MDSVOD20251118_10014",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/e3/c2/e3c22cf3-5415-471e-8ef4-466a367c2f28/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "Programa 8",
+          "desc": "Por primera vez en la historia del programa son las solteras quienes ven imágenes de lo que está sucediendo en la otra villa. Todo esto en un momento en el que la temperatura se está disparando por encima de lo normal..."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/11/19/lidlt-t9-09_da39.jpg",
+          "contentId": "9",
+          "category": "programas",
+          "id": "MDSVOD20251119_10016",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/25/9c/259c2de3-ad3c-49a0-9249-89150e8ee3fa/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "Programa 9",
+          "desc": "Los chicos se enfrentan por segunda vez a la temida hoguera, al visionado de unas imágenes que les removerán por dentro, especialmente a Juanpi, que ya en la anterior hoguera terminó hundido por la actitud de Sandra."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/11/24/lidlt-t9-10_da39.jpg",
+          "contentId": "10",
+          "category": "programas",
+          "id": "MDSVOD20251124_10113",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/97/23/9723fc74-fa86-46b0-b6a8-74190c5d3bc7/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "Programa 10",
+          "desc": "Gilbert no está presente en la hoguera tras ser sancionado, pero sus compañeros ven las imágenes de Claudia con Gerard y se quedan impactados con sus escenas. Además, Helena se derrumba al ver a Rodri besándose con Olatz y trata de huir en busca de su novio para hablar con él. Antes de volver a la villa, Sandra se reencuentra con Carmen, la madre de Juanpi."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/11/25/lidlt-11_da39.jpg",
+          "contentId": "11",
+          "category": "programas",
+          "id": "MDSVOD20251125_10110",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/c4/17/c4176f28-0680-416e-b86b-01c66181fb9d/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            },
+            {
+              "url": "//ok.ru/videoembed/10294490892950",
+              "label": "Backup",
+              "type": "iframe",
+              "cast": false,
+              "extension": false
+            }
+          ],
+          "title": "Programa 11",
+          "desc": "Tras la decisión sin precedentes de los chicos de convocar una hoguera de confrontación entre su compañero Gilbert y la novia de éste, Claudia, ambos tienen la oportunidad de verse las caras ante Sandra Barneda y explicar sus comportamientos. Ella no sabe si acudirá a la cita y explica sus dudas al resto de chicas."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/11/26/lidlt-t9-12_da39.jpg",
+          "contentId": "12",
+          "category": "programas",
+          "id": "MDSVOD20251126_10020",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/06/cd/06cdca7d-66fe-4ce8-a3c3-14a069b0acc5/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "Programa 12",
+          "desc": "Mayeli no aguanta más y se planta en Villa Montaña para reprochar a Álvaro su actitud, una imperdonable acción que le deja a él destrozado y a ella en una situación muy difícil en el programa."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/12/01/lidlt-t9-13_da39-2.jpg",
+          "contentId": "13",
+          "category": "programas",
+          "id": "MDSVOD20251201_10122",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/1e/f4/1ef4e771-da72-4a47-a1fa-b58af7a598fa/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "Programa 13",
+          "desc": "Tras los últimos acontecimientos, Mayeli y Álvaro son convocados a una hoguera de las consecuencias, antes de los chicos se enfrenten a una nueva hogurea con imágenes muy delicadas."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/12/02/lidlt-t9-14_da39.jpg",
+          "contentId": "14",
+          "category": "programas",
+          "id": "MDSVOD20251202_10071",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/1b/9c/1b9cc784-0ce5-4709-8859-7b87650dd840/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "Programa 14",
+          "desc": "La hoguera de los chicos está siendo complicada especialmente para Rodri, que se derrumba junto a sus compañeros tras ver las imágenes de Helena y Barranco besándose en el jacuzzi de Villa Playa. Además, los chicos tienen el poder de vetar a un soltero para que no pueda tener contacto con sus novias durante 24 horas con el collar del veto y las chicas se enfrentan a una nueva hoguera."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/12/03/lidlt-t9-15_da39.jpg",
+          "contentId": "15",
+          "category": "programas",
+          "id": "MDSVOD20251203_10017",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/4f/28/4f28e281-3f1b-4aa5-9837-80eb0c4383ec/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "Programa 15",
+          "desc": "Una nueva pareja, Andrea y Enrique, se une a la aventura. Esta nueva compañera levanta los recelos de Claudia, que la ve como una rival en su relación con Gerard. Mientras, llega la hora de los vetos."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/12/08/lidlt-t9-16_da39.jpg",
+          "contentId": "16",
+          "category": "programas",
+          "id": "MDSVOD20251208_10045",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/08/a5/08a50871-2948-4826-88e2-c86a3dd28b72/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "Programa 16",
+          "desc": "Almudena y Darío tienen la oportunidad de reencontrarse ante un espejo durante tres minutos pero sin poder hablar. Sin embargo, la tensión acumulada tras las hogueras es tan intensa que, al verse, la pareja no puede contenerse y acaba saltándose todas las normas."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/12/09/lidlt-t9-17_da39.jpg",
+          "contentId": "17",
+          "category": "programas",
+          "id": "MDSVOD20251209_10134",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/7b/b3/7bb38277-1866-411a-9d23-adf85cfb03c1/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "Programa 17",
+          "desc": "Después del dramático reencuentro de Almudena y Darío ante el espejo, la pareja busca reasentarse en sus villas y continuar con la experiencia, mientras el triángulo Claudia - Gerard - Andrea sigue acaparando buena parte de la atención."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/12/10/lidlt-t9-18_da39.jpg",
+          "contentId": "18",
+          "category": "programas",
+          "id": "MDSVOD20251210_10084",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/d5/2e/d52eba34-da7f-493d-8150-2796d2d86d1e/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "Programa 18",
+          "desc": "Los chicos se enfrentan a una hoguera llena de imágenes que les pondrán al límite, una hoguera en la que cada uno de ellos estallará al comprobar la actitud de sus parejas."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/12/15/lidlt-t9-19_da39.jpg",
+          "contentId": "19",
+          "category": "programas",
+          "id": "MDSVOD20251215_10153",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/de/d9/ded985dd-a807-4fed-a845-6e620e98340d/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "Programa 19",
+          "desc": "En una nueva hoguera para las chicas, Claudia se rompe de dolor al ver las imágenes de Gilbert, emprendiendo una nueva escapada a la villa de los chicos. Después, Almudena tampoco puede resistir unas imágenes muy duras para ella."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/12/16/lidlt-t9-20_da39.jpg",
+          "contentId": "20",
+          "category": "programas",
+          "id": "MDSVOD20251216_10011",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/cd/99/cd992c84-1e35-4e74-bc2d-a8493c5df4ee/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "Programa 20",
+          "desc": "Almudena y Borja están más cerca que nunca y el desenlace de esta tentación podría estar muy cerca. Por otro lado, Rodri puede ver durante diez minutos lo que está sucediendo en la villa de las chicas, y lo que ve de Helena le confirma todo lo que ya pensaba."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/12/17/lidlt-t9-21_da39.jpg",
+          "contentId": "21",
+          "category": "programas",
+          "id": "MDSVOD20251217_10126",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/cc/61/cc61be65-784e-41ae-8337-5c75775ec27b/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            },
+            {
+              "url": "//ok.ru/videoembed/10559007361686",
+              "label": "Backup",
+              "type": "iframe",
+              "cast": false,
+              "extension": false
+            }
+          ],
+          "title": "Programa 21",
+          "desc": "Rodri y Helena se citan en una tensa hoguera de confrontación. Además, los concursantes leen las cartas que sus parejas les habían dejado escritas antes de comenzar esta aventura."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/12/22/lidlt-t9-22_da39.jpg",
+          "contentId": "22",
+          "category": "programas",
+          "id": "MDSVOD20251222_10070",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/17/92/1792f96b-2a1b-404e-bc0f-9f1fb3375225/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            },
+            {
+              "url": "//ok.ru/videoembed/10631167216278",
+              "label": "Backup",
+              "type": "iframe",
+              "cast": false,
+              "extension": false
+            }
+          ],
+          "title": "Programa 22",
+          "desc": "Tras un reencuentro cargado de tensión en la hoguera de confrontación, Rodri y Helena afrontan su decisión final, marcada por reproches antes de abandonar esta prueba de amor en República Dominicana. Además, llegan las esperadas hogueras mixtas, con Claudia, Almudena, Enrique y Juanpi, que protagonizan un emotivo encuentro a ritmo de canciones muy significativas."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2025/12/29/lidlt-t9-23_da39.jpg",
+          "contentId": "23",
+          "category": "programas",
+          "id": "MDSVOD20251229_10019",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/fe/3b/fe3b7a13-5ba4-4724-a965-7b6dd7121a58/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            },
+            {
+              "url": "//ok.ru/videoembed/10741307869846",
+              "label": "Backup",
+              "type": "iframe",
+              "cast": false,
+              "extension": false
+            }
+          ],
+          "title": "Programa 23",
+          "desc": "Llega la segunda hoguera mixta en la que Darío, Sandra, Andrea y Gilbert tendrán que enfrentarse a la realidad de lo que desvelen las imágenes que les muestren junto a las parejas de sus respectivos compañeros de villa. Además, Sandra Barneda visita a los habitantes de Villa Playa y Villa Montaña para anunciarles que deberán elegir a su tentador y tentadora favoritos."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2026/01/05/lidlt-t9-24_da39-2.jpg",
+          "contentId": "24",
+          "category": "programas",
+          "id": "MDSVOD20260106_10004",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/05/22/05224b12-5884-4a6c-b794-4ec9895d9bb1/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            },
+            {
+              "url": "//ok.ru/videoembed/10860725471894",
+              "label": "Backup",
+              "type": "iframe",
+              "cast": false,
+              "extension": false
+            }
+          ],
+          "title": "Programa 24",
+          "desc": "Borja, el tentador de Almudena, protagoniza un intenso cara a cara con Darío. Por su parte, las chicas se enfrentan a las tentadoras de sus parejas, y el choque entre Almudena y Cristina provoca que Sandra Barneda abandone la hoguera. Además, comienza la recta final del programa y las parejas se despiden de los solteros."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2026/01/07/lidlt-t9-25_da39.jpg",
+          "contentId": "25",
+          "category": "programas",
+          "id": "MDSVOD20260107_10136",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/8c/b4/8cb4a7d4-6704-4b99-9c46-cf5d958db5d1/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            },
+            {
+              "url": "//ok.ru/videoembed/10876165819030",
+              "label": "Backup",
+              "type": "iframe",
+              "cast": false,
+              "extension": false
+            }
+          ],
+          "title": "Programa 25",
+          "desc": "Llegan las hogueras finales y las decisiones definitivas que ponen punto y final a la experiencia en República Dominicana. Juanpi y Sandra tienen una confrontación explosiva; Andrea y Enrique se dicen todo pese al poco tiempo juntos; Gilbert y Claudia afrontan una montaña rusa de emociones; y Almudena y Darío estallan con duras confesiones."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2026/01/12/lidlt-t9-26_da39.jpg",
+          "contentId": "26",
+          "category": "programas",
+          "id": "MDSVOD20260112_10018",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/2e/64/2e64643c-31be-4e87-8ee2-6ee77d40e4b2/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            },
+            {
+              "url": "//ok.ru/videoembed/10947709045398",
+              "label": "Backup",
+              "type": "iframe",
+              "cast": false,
+              "extension": false
+            }
+          ],
+          "title": "Programa 26",
+          "desc": "Chicos y chicas vuelven para saldar sus cuentas pendientes en un reencuentro cargado de tensión. Rodri y Helena se enfrentan a Barranco y Olatz, mientras Mayeli y Álvaro se ven las caras con Érika tras su expulsión y la noticia del embarazo. ¿Saltará todo por los aires?"
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/cimg/2026/01/13/lidlt-t9-27_da39.jpg",
+          "contentId": "27",
+          "category": "programas",
+          "id": "MDSVOD20260113_10059",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/d7/d3/d7d3f154-dda9-4ad8-92b2-ff94415e20fd/hls-fairplay.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            },
+            {
+              "url": "//ok.ru/videoembed/10968073833110",
+              "label": "Backup",
+              "type": "iframe",
+              "cast": false,
+              "extension": false
+            }
+          ],
+          "title": "Programa 27",
+          "desc": "Cuatro meses después, Claudia se reencuentra con Gilbert en un episodio lleno de gritos y reproches. También se enfrentan a este complicado momento, con sus respectivos tentadores y tentadoras, Sandra y Juanpi, y Enrique y Andrea."
+        }
+      ],
+      "debates": [
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/eimg/2025/11/14/eldebatedelastentaciones1-16-9-aspect-ratio-default-0_da39.jpg",
+          "contentId": "1",
+          "category": "debates",
+          "id": "MDSVOD20251114_10020",
+          "video": [
+            {
+              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/ed/10/ed1034d5-ebcb-4d82-8546-ed90f7604e7b/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "El debate de las tentaciones 1",
+          "desc": "Casi un año después, la tentación despierta con fuerza y desata los miedos de las cinco parejas. Las protagonistas de la edición, Claudia, Almudena, Helena y Sandra, se someten a las críticas de los colaboradores y ven imágenes inéditas de sus respectivas parejas tras la primera hoguera. Además, Nieves habla de su expulsión y desvelamos la primera infidelidad de un chico en Villa Montaña."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/eimg/2025/11/21/debate-tentaciones-2-16-9-aspect-ratio-default-0_da39.jpg",
+          "contentId": "2",
+          "category": "debates",
+          "id": "MDSVOD20251121_10038",
+          "video": [
+            {
+              "url": "https://vbd.mediaset.es/orivod/vod/bitmovin/13/2b/132b98c7-1e49-4ade-903b-9bdce7e37f4e/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "El debate de las tentaciones 2",
+          "desc": "Gilbert, Juanpi, Darío, Rodri y Álvaro, los chicos de esta edición, se sientan en el plató del debate para responder a las críticas de los colaboradores y enfrentarse a imágenes que no han visto hasta el momento. Nuestras protagonistas viven una particular hoguera en el debate de las tentaciones. Además, el debate muestra imágenes exclusivas de la hoguera de las chicas y un avance en primicia del próximo programa."
+        },
+        {
+          "content": "video",
+          "season": "9",
+          "image": "https://album.mediaset.es/eimg/2025/11/28/eldebatedelastentaciones3-16-9-aspect-ratio-default-0_da39.jpg",
+          "contentId": "3",
+          "category": "debates",
+          "id": "MDSVOD20251128_10054",
+          "video": [
+            {
+              "url": "https://vbd.mediaset.es/orivod/vod/bitmovin/c8/2e/c82ec9ea-c4a9-4e7d-ab8c-aa54b12c6df9/main.ism/picky.m3u8",
+              "label": "Principal",
+              "type": "hls",
+              "cast": false,
+              "extension": true
+            }
+          ],
+          "title": "El debate de las tentaciones 3",
+          "desc": "Tras su semana más dura, Claudia se enfrenta a nuevas imágenes inéditas en plató junto a Sandra Barneda de lo que ocurrió entre Gerard y Almudena mientras ella estaba en la hoguera de confrontación con Gilbert. Además, Gabriella Hahlingag se vuelve a ver cara a cara por primera vez con Manuel González desde su sonada ruptura y vemos un avance de la hoguera de las consecuencias de Álvaro y Mayeli."
         }
       ]
     }
@@ -3094,6 +3829,36 @@
       ],
       "title": "Programa 6",
       "desc": "Tras sus hogueras, chicos y chicas aprovechan para recibir el consuelo y el cariño de sus tentadores favoritos. Además, Montoya  podrá ver durante 10 minutos imágenes en directo de lo que está haciendo Anita. Estas imágenes llevarán a Montoya a emprender una huida desesperada hacia Villa Playa."
+    },
+    {
+      "content": "video",
+      "season": "8",
+      "image": "https://i.imgur.com/65uhsS7.png",
+      "contentId": "go",
+      "category": "instagram",
+      "id": "1",
+      "video": [],
+      "title": "Síguenos en Instagram 🔜",
+      "desc": "En las próximas horas, la web dejará de estar accesible. Gracias por haber estado ahí🫶"
+    },
+    {
+      "content": "video",
+      "season": "8",
+      "image": "https://album.mediaset.es/cimg/2025/01/29/debate4plus_da39.jpg",
+      "contentId": "4",
+      "category": "debates",
+      "id": "MDSEPS20250124_10033",
+      "video": [
+        {
+          "url": "https://vbdk.mediasetinfinity.es/orivod/vod/bitmovin/57/ba/57bad4e9-d34b-4337-a90d-a1054760e07a/hls-fairplay.ism/picky.m3u8",
+          "label": "Principal",
+          "type": "hls",
+          "cast": false,
+          "extension": true
+        }
+      ],
+      "title": "El debate de las tentaciones 4",
+      "desc": "Tras decir adiós a \"La isla de las Tentaciones', Alba se sienta en el plató del Debate. ¿Se arrepiente de algo? En el programa de hoy veremos una secuencia inédita de su hoguera de confrontación con Gerard que nos va a dejar sin palabras. Además, las dudas de Anita tras su beso y la conversación más sincera de Montoya con Gabriela."
     },
     {
       "content": "video",
