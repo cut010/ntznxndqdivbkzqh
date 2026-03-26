@@ -3712,7 +3712,7 @@
           "id": "MDSVOD20260113_10059",
           "video": [
             {
-              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/d7/d3/d7d3f154-dda9-4ad8-92b2-ff94415e20fd/hls-fairplay.ism/picky.m3u8",
+              "url": "https://vbdk.mediasetinfinity.es/orivod/vod/bitmovin/d7/d3/d7d3f154-dda9-4ad8-92b2-ff94415e20fd/main.ism/picky.m3u8",
               "label": "Principal",
               "type": "hls",
               "cast": false,
