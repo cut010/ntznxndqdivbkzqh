@@ -8,52 +8,31 @@ mkdir -p "$TMP_DIR"
 IA_ACCESS="$IA_ACCESS_KEY"
 IA_SECRET="$IA_SECRET_KEY"
 
+FILTER_SEASON="${FILTER_SEASON:-}"
+FILTER_CATEGORY="${FILTER_CATEGORY:-}"
+
 PROCESSED=0
 FAILED=0
 
-# Detectar episodios nuevos comparando con el commit anterior
-NEW_IDS_FILE="${TMP_DIR}/new_ids.txt"
+echo "FILTER_SEASON='${FILTER_SEASON}' FILTER_CATEGORY='${FILTER_CATEGORY}'"
 
-# Buscar el ultimo commit que NO sea del bot
-COMPARE_REF=$(git log --oneline --format="%H %s" | grep -v "auto: mp4 procesados" | head -2 | tail -1 | cut -d' ' -f1)
-
-if [ -z "$COMPARE_REF" ]; then
-  echo "No hay commit anterior para comparar."
-  exit 0
-fi
-
-echo "Comparando con: $(git log --oneline -1 "$COMPARE_REF")"
-
-git show "${COMPARE_REF}:${CONTENT_FILE}" > "${TMP_DIR}/old_content.json" 2>/dev/null || echo '{"content":{}}' > "${TMP_DIR}/old_content.json"
-
-jq -r '.content | to_entries[] | .value | to_entries[] | .value[] | .contentId' "${TMP_DIR}/old_content.json" | sort > "${TMP_DIR}/old_ids.txt"
-jq -r '.content | to_entries[] | .value | to_entries[] | .value[] | .contentId' "$CONTENT_FILE" | sort > "${TMP_DIR}/current_ids.txt"
-
-comm -13 "${TMP_DIR}/old_ids.txt" "${TMP_DIR}/current_ids.txt" > "$NEW_IDS_FILE"
-
-if [ ! -s "$NEW_IDS_FILE" ]; then
-  echo "No hay episodios nuevos."
-  exit 0
-fi
-
-new_count=$(wc -l < "$NEW_IDS_FILE" | tr -d ' ')
-echo "Episodios nuevos detectados: ${new_count}"
-cat "$NEW_IDS_FILE"
-echo ""
-
-items=$(jq -r --slurpfile ids <(jq -R '.' "$NEW_IDS_FILE" | jq -s '.') '
-  [.content | to_entries[] | .key as $season |
-    .value | to_entries[] | .key as $category |
+# Buscar episodios que tienen HLS pero no MP4 (solo T10+)
+MIN_SEASON="${FILTER_SEASON:-10}"
+items=$(jq -r --arg season "$FILTER_SEASON" --arg category "$FILTER_CATEGORY" --argjson min 10 '
+  [.content | to_entries[] | .key as $s |
+    select(($s | tonumber) >= $min) |
+    select($season == "" or $s == $season) |
+    .value | to_entries[] | .key as $c |
+    select($category == "" or $c == $category) |
     .value[] |
-    select(.contentId as $cid | $ids[0] | index($cid)) |
     select(.video | length > 0) |
     select(.video | map(select(.type == "mp4")) | length == 0) |
-    {season: $season, category: $category, contentId: .contentId, title: .title, hls: (.video[0].url)}
+    {season: $s, category: $c, contentId: .contentId, title: .title, hls: (.video[0].url)}
   ] | .[] | @base64
 ' "$CONTENT_FILE" || true)
 
 if [ -z "$items" ]; then
-  echo "Los episodios nuevos ya tienen MP4 o no tienen video."
+  echo "No hay videos pendientes."
   exit 0
 fi
 
