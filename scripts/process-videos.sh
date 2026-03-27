@@ -14,19 +14,21 @@ FAILED=0
 # Detectar episodios nuevos comparando con el commit anterior
 NEW_IDS_FILE="${TMP_DIR}/new_ids.txt"
 
-if git log --oneline -2 | grep -q "auto: mp4 procesados"; then
-  COMPARE_REF="HEAD~2"
-else
-  COMPARE_REF="HEAD~1"
+# Buscar el ultimo commit que NO sea del bot
+COMPARE_REF=$(git log --oneline --format="%H %s" | grep -v "auto: mp4 procesados" | head -2 | tail -1 | cut -d' ' -f1)
+
+if [ -z "$COMPARE_REF" ]; then
+  echo "No hay commit anterior para comparar."
+  exit 0
 fi
+
+echo "Comparando con: $(git log --oneline -1 "$COMPARE_REF")"
 
 git show "${COMPARE_REF}:${CONTENT_FILE}" > "${TMP_DIR}/old_content.json" 2>/dev/null || echo '{"content":{}}' > "${TMP_DIR}/old_content.json"
 
-# Extraer IDs del contenido anterior y actual
 jq -r '.content | to_entries[] | .value | to_entries[] | .value[] | .contentId' "${TMP_DIR}/old_content.json" | sort > "${TMP_DIR}/old_ids.txt"
 jq -r '.content | to_entries[] | .value | to_entries[] | .value[] | .contentId' "$CONTENT_FILE" | sort > "${TMP_DIR}/current_ids.txt"
 
-# IDs que estan en current pero no en old = nuevos
 comm -13 "${TMP_DIR}/old_ids.txt" "${TMP_DIR}/current_ids.txt" > "$NEW_IDS_FILE"
 
 if [ ! -s "$NEW_IDS_FILE" ]; then
@@ -39,7 +41,6 @@ echo "Episodios nuevos detectados: ${new_count}"
 cat "$NEW_IDS_FILE"
 echo ""
 
-# Filtrar solo los nuevos que no tienen MP4
 items=$(jq -r --slurpfile ids <(jq -R '.' "$NEW_IDS_FILE" | jq -s '.') '
   [.content | to_entries[] | .key as $season |
     .value | to_entries[] | .key as $category |
@@ -76,7 +77,9 @@ for item_b64 in $items; do
   echo "HLS: ${hls_url}"
 
   echo "Descargando..."
-  if ! ffmpeg -i "$hls_url" -c copy -bsf:a aac_adtstoasc -movflags +faststart -y "$output_path" 2>/tmp/ffmpeg.log; then
+  if ! ffmpeg \
+    -headers $'Origin: https://www.mediasetinfinity.es\r\nReferer: https://www.mediasetinfinity.es/\r\n' \
+    -i "$hls_url" -c copy -bsf:a aac_adtstoasc -movflags +faststart -y "$output_path" 2>/tmp/ffmpeg.log; then
     echo "ERROR: ffmpeg fallo para ${title}"
     tail -5 /tmp/ffmpeg.log
     FAILED=$((FAILED + 1))
