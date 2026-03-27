@@ -1,164 +1,58 @@
-#!/bin/bash
-set -euo pipefail
+name: Process Videos
 
-CONTENT_FILE="data/content.json"
-TMP_DIR="/tmp/lidlt-process"
-mkdir -p "$TMP_DIR"
+on:
+  push:
+    paths:
+      - 'data/content.json'
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      season:
+        description: 'Temporada (vacio = todas)'
+        required: false
+        default: ''
+      category:
+        description: 'Categoria (vacio = todas)'
+        required: false
+        default: ''
 
-IA_ACCESS="$IA_ACCESS_KEY"
-IA_SECRET="$IA_SECRET_KEY"
+permissions:
+  contents: write
 
-FILTER_SEASON="${FILTER_SEASON:-}"
-FILTER_CATEGORY="${FILTER_CATEGORY:-}"
+concurrency:
+  group: process-videos
+  cancel-in-progress: false
 
-PROCESSED=0
-FAILED=0
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    environment: production
 
-# Si se especifica temporada/categoria, procesar directamente sin comparar commits
-if [ -n "$FILTER_SEASON" ] || [ -n "$FILTER_CATEGORY" ]; then
-  echo "Modo manual: season=${FILTER_SEASON:-todas} category=${FILTER_CATEGORY:-todas}"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
 
-  echo "Buscando en content.json season=$FILTER_SEASON..."
-  echo "Keys disponibles: $(jq -r '.content | keys[]' "$CONTENT_FILE")"
-  echo "Items en T${FILTER_SEASON}: $(jq --arg s "$FILTER_SEASON" '[.content[$s] // {} | to_entries[] | .value[]] | length' "$CONTENT_FILE")"
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg jq
 
-  items=$(jq -r --arg season "$FILTER_SEASON" --arg category "$FILTER_CATEGORY" '
-    [.content[$season] // {} | to_entries[] | .key as $c |
-      select($category == "" or $c == $category) |
-      .value[] |
-      select(.video | length > 0) |
-      select(.video | map(select(.type == "mp4")) | length == 0) |
-      {season: $season, category: $c, contentId: .contentId, title: .title, hls: (.video[0].url)}
-    ] | .[] | @base64
-  ' "$CONTENT_FILE" || true)
+      - name: Process pending videos
+        env:
+          IA_ACCESS_KEY: ${{ secrets.IA_ACCESS_KEY }}
+          IA_SECRET_KEY: ${{ secrets.IA_SECRET_KEY }}
+          FILTER_SEASON: ${{ github.event.inputs.season || '' }}
+          FILTER_CATEGORY: ${{ github.event.inputs.category || '' }}
+        run: |
+          chmod +x scripts/process-videos.sh
+          bash scripts/process-videos.sh
 
-else
-  # Detectar episodios nuevos comparando con el commit anterior
-  COMPARE_REF=$(git log --oneline --format="%H %s" | grep -v "auto: mp4 procesados" | head -2 | tail -1 | cut -d' ' -f1)
-
-  if [ -z "$COMPARE_REF" ]; then
-    echo "No hay commit anterior para comparar."
-    exit 0
-  fi
-
-  echo "Comparando con: $(git log --oneline -1 "$COMPARE_REF")"
-
-  git show "${COMPARE_REF}:${CONTENT_FILE}" > "${TMP_DIR}/old_content.json" 2>/dev/null || echo '{"content":{}}' > "${TMP_DIR}/old_content.json"
-
-  jq -r '.content | to_entries[] | .value | to_entries[] | .value[] | .contentId' "${TMP_DIR}/old_content.json" | sort > "${TMP_DIR}/old_ids.txt"
-  jq -r '.content | to_entries[] | .value | to_entries[] | .value[] | .contentId' "$CONTENT_FILE" | sort > "${TMP_DIR}/current_ids.txt"
-
-  comm -13 "${TMP_DIR}/old_ids.txt" "${TMP_DIR}/current_ids.txt" > "${TMP_DIR}/new_ids.txt"
-
-  if [ ! -s "${TMP_DIR}/new_ids.txt" ]; then
-    echo "No hay episodios nuevos."
-    exit 0
-  fi
-
-  new_count=$(wc -l < "${TMP_DIR}/new_ids.txt" | tr -d ' ')
-  echo "Episodios nuevos detectados: ${new_count}"
-  cat "${TMP_DIR}/new_ids.txt"
-  echo ""
-
-  items=$(jq -r --slurpfile ids <(jq -R '.' "${TMP_DIR}/new_ids.txt" | jq -s '.') '
-    [.content | to_entries[] | .key as $season |
-      .value | to_entries[] | .key as $category |
-      .value[] |
-      select(.contentId as $cid | $ids[0] | index($cid)) |
-      select(.video | length > 0) |
-      select(.video | map(select(.type == "mp4")) | length == 0) |
-      {season: $season, category: $category, contentId: .contentId, title: .title, hls: (.video[0].url)}
-    ] | .[] | @base64
-  ' "$CONTENT_FILE" || true)
-fi
-
-if [ -z "$items" ]; then
-  echo "No hay videos pendientes."
-  exit 0
-fi
-
-total=$(echo "$items" | wc -l | tr -d ' ')
-echo "Videos a procesar: $total"
-
-for item_b64 in $items; do
-  data=$(echo "$item_b64" | base64 -d)
-  season=$(echo "$data" | jq -r '.season')
-  category=$(echo "$data" | jq -r '.category')
-  contentId=$(echo "$data" | jq -r '.contentId')
-  title=$(echo "$data" | jq -r '.title')
-  hls_url=$(echo "$data" | jq -r '.hls')
-
-  identifier="lidlt-t${season}-${category}-${contentId}"
-  filename="${identifier}.mp4"
-  output_path="${TMP_DIR}/${filename}"
-
-  echo ""
-  echo "=== Procesando: ${title} (T${season} ${category} #${contentId}) ==="
-  echo "HLS: ${hls_url}"
-
-  echo "Descargando..."
-  if ! ffmpeg \
-    -headers $'Origin: https://www.mediasetinfinity.es\r\nReferer: https://www.mediasetinfinity.es/\r\n' \
-    -i "$hls_url" -c copy -bsf:a aac_adtstoasc -movflags +faststart -y "$output_path" 2>/tmp/ffmpeg.log; then
-    echo "ERROR: ffmpeg fallo para ${title}"
-    tail -5 /tmp/ffmpeg.log
-    FAILED=$((FAILED + 1))
-    rm -f "$output_path"
-    continue
-  fi
-
-  filesize=$(du -h "$output_path" | cut -f1)
-  echo "Descargado: ${filesize}"
-
-  echo "Subiendo a Archive.org..."
-  http_code=$(curl -s --retry 3 --retry-delay 5 \
-    -H "Authorization: LOW ${IA_ACCESS}:${IA_SECRET}" \
-    -H "x-archive-meta-mediatype: movies" \
-    -H "x-archive-meta-title: ${title}" \
-    -H "x-archive-meta-collection: opensource_movies" \
-    -H "x-amz-auto-make-bucket: 1" \
-    -T "$output_path" \
-    "https://s3.us.archive.org/${identifier}/${filename}" \
-    -o /tmp/ia_response.txt -w "%{http_code}")
-
-  if [ "$http_code" != "200" ]; then
-    echo "ERROR: Archive.org respondio ${http_code} para ${title}"
-    cat /tmp/ia_response.txt 2>/dev/null
-    FAILED=$((FAILED + 1))
-    rm -f "$output_path"
-    continue
-  fi
-
-  archive_url="https://archive.org/download/${identifier}/${filename}"
-  echo "Subido: ${archive_url}"
-
-  jq --arg season "$season" \
-     --arg category "$category" \
-     --arg contentId "$contentId" \
-     --arg url "$archive_url" \
-     '
-     .content[$season][$category] |= map(
-       if .contentId == $contentId then
-         .video += [{
-           "url": $url,
-           "label": "MP4",
-           "type": "mp4",
-           "cast": true,
-           "extension": false
-         }]
-       else . end
-     )
-     ' "$CONTENT_FILE" > "${CONTENT_FILE}.tmp" && mv "${CONTENT_FILE}.tmp" "$CONTENT_FILE"
-
-  echo "JSON actualizado."
-  PROCESSED=$((PROCESSED + 1))
-
-  rm -f "$output_path"
-  echo "=== Completado: ${title} ==="
-done
-
-echo ""
-echo "=== Resumen ==="
-echo "Procesados: ${PROCESSED}"
-echo "Fallidos: ${FAILED}"
-echo "Total: ${total}"
+      - name: Commit changes
+        run: |
+          git config user.name "lidlt-bot"
+          git config user.email "bot@laisla.wtf"
+          git diff --quiet data/content.json && echo "Sin cambios" && exit 0
+          git add data/content.json
+          git commit -m "auto: mp4 procesados [skip ci]"
+          git push
