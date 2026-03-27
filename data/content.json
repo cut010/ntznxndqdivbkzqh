@@ -3901,6 +3901,13 @@
               "type": "hls",
               "cast": false,
               "extension": true
+            },
+            {
+              "url": "https://archive.org/download/lidlt-t10-programas-Rumbo-1/lidlt-t10-programas-Rumbo-1.mp4",
+              "label": "MP4",
+              "type": "mp4",
+              "cast": true,
+              "extension": false
             }
           ],
           "title": "Rumbo 1 - Conoce a los solteros y solteras de la décima temporada",
