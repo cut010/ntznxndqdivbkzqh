@@ -11,23 +11,53 @@ IA_SECRET="$IA_SECRET_KEY"
 PROCESSED=0
 FAILED=0
 
-items=$(jq -r '
+# Detectar episodios nuevos comparando con el commit anterior
+NEW_IDS_FILE="${TMP_DIR}/new_ids.txt"
+
+if git log --oneline -2 | grep -q "auto: mp4 procesados"; then
+  COMPARE_REF="HEAD~2"
+else
+  COMPARE_REF="HEAD~1"
+fi
+
+git show "${COMPARE_REF}:${CONTENT_FILE}" > "${TMP_DIR}/old_content.json" 2>/dev/null || echo '{"content":{}}' > "${TMP_DIR}/old_content.json"
+
+# Extraer IDs del contenido anterior y actual
+jq -r '.content | to_entries[] | .value | to_entries[] | .value[] | .contentId' "${TMP_DIR}/old_content.json" | sort > "${TMP_DIR}/old_ids.txt"
+jq -r '.content | to_entries[] | .value | to_entries[] | .value[] | .contentId' "$CONTENT_FILE" | sort > "${TMP_DIR}/current_ids.txt"
+
+# IDs que estan en current pero no en old = nuevos
+comm -13 "${TMP_DIR}/old_ids.txt" "${TMP_DIR}/current_ids.txt" > "$NEW_IDS_FILE"
+
+if [ ! -s "$NEW_IDS_FILE" ]; then
+  echo "No hay episodios nuevos."
+  exit 0
+fi
+
+new_count=$(wc -l < "$NEW_IDS_FILE" | tr -d ' ')
+echo "Episodios nuevos detectados: ${new_count}"
+cat "$NEW_IDS_FILE"
+echo ""
+
+# Filtrar solo los nuevos que no tienen MP4
+items=$(jq -r --slurpfile ids <(jq -R '.' "$NEW_IDS_FILE" | jq -s '.') '
   [.content | to_entries[] | .key as $season |
     .value | to_entries[] | .key as $category |
     .value[] |
+    select(.contentId as $cid | $ids[0] | index($cid)) |
     select(.video | length > 0) |
     select(.video | map(select(.type == "mp4")) | length == 0) |
     {season: $season, category: $category, contentId: .contentId, title: .title, hls: (.video[0].url)}
   ] | .[] | @base64
-' "$CONTENT_FILE")
+' "$CONTENT_FILE" || true)
 
 if [ -z "$items" ]; then
-  echo "No hay videos pendientes de procesar."
+  echo "Los episodios nuevos ya tienen MP4 o no tienen video."
   exit 0
 fi
 
 total=$(echo "$items" | wc -l | tr -d ' ')
-echo "Videos pendientes: $total"
+echo "Videos a procesar: $total"
 
 for item_b64 in $items; do
   data=$(echo "$item_b64" | base64 -d)
@@ -45,11 +75,10 @@ for item_b64 in $items; do
   echo "=== Procesando: ${title} (T${season} ${category} #${contentId}) ==="
   echo "HLS: ${hls_url}"
 
-  # Descargar HLS a MP4
   echo "Descargando..."
   if ! ffmpeg -i "$hls_url" -c copy -bsf:a aac_adtstoasc -movflags +faststart -y "$output_path" 2>/tmp/ffmpeg.log; then
     echo "ERROR: ffmpeg fallo para ${title}"
-    cat /tmp/ffmpeg.log | tail -5
+    tail -5 /tmp/ffmpeg.log
     FAILED=$((FAILED + 1))
     rm -f "$output_path"
     continue
@@ -58,9 +87,8 @@ for item_b64 in $items; do
   filesize=$(du -h "$output_path" | cut -f1)
   echo "Descargado: ${filesize}"
 
-  # Subir a Archive.org
   echo "Subiendo a Archive.org..."
-  if ! curl -s --retry 3 --retry-delay 5 \
+  http_code=$(curl -s --retry 3 --retry-delay 5 \
     -H "Authorization: LOW ${IA_ACCESS}:${IA_SECRET}" \
     -H "x-archive-meta-mediatype: movies" \
     -H "x-archive-meta-title: ${title}" \
@@ -68,8 +96,10 @@ for item_b64 in $items; do
     -H "x-amz-auto-make-bucket: 1" \
     -T "$output_path" \
     "https://s3.us.archive.org/${identifier}/${filename}" \
-    -o /tmp/ia_response.txt -w "%{http_code}" | grep -q "200"; then
-    echo "ERROR: Subida a Archive.org fallo para ${title}"
+    -o /tmp/ia_response.txt -w "%{http_code}")
+
+  if [ "$http_code" != "200" ]; then
+    echo "ERROR: Archive.org respondio ${http_code} para ${title}"
     cat /tmp/ia_response.txt 2>/dev/null
     FAILED=$((FAILED + 1))
     rm -f "$output_path"
@@ -79,7 +109,6 @@ for item_b64 in $items; do
   archive_url="https://archive.org/download/${identifier}/${filename}"
   echo "Subido: ${archive_url}"
 
-  # Actualizar content.json
   jq --arg season "$season" \
      --arg category "$category" \
      --arg contentId "$contentId" \
@@ -101,7 +130,6 @@ for item_b64 in $items; do
   echo "JSON actualizado."
   PROCESSED=$((PROCESSED + 1))
 
-  # Limpiar
   rm -f "$output_path"
   echo "=== Completado: ${title} ==="
 done
