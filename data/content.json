@@ -3896,7 +3896,7 @@
           "id": "MDSVOD20260327_10023",
           "video": [
             {
-              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/b9/50/b9509166-582a-43ef-b9a6-6f9f1693d295/main.ism/picky.m3u8",
+              "url": "https://vbdk.mediasetinfinity.es/orivod/vod/bitmovin/b9/50/b9509166-582a-43ef-b9a6-6f9f1693d295/main.ism/picky.m3u8",
               "label": "Principal",
               "type": "hls",
               "cast": false,
@@ -3920,7 +3920,7 @@
       "id": "MDSVOD20260327_10023",
       "video": [
         {
-          "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/b9/50/b9509166-582a-43ef-b9a6-6f9f1693d295/main.ism/picky.m3u8",
+          "url": "https://vbdk.mediasetinfinity.es/orivod/vod/bitmovin/b9/50/b9509166-582a-43ef-b9a6-6f9f1693d295/main.ism/picky.m3u8",
           "label": "Principal",
           "type": "hls",
           "cast": false,
@@ -3928,7 +3928,7 @@
         }
       ],
       "title": "Rumbo 1 - Conoce a los solteros y solteras de la décima temporada",
-      "desc": "Con la décima temporada a punto de arrancar, conocemos a los solteros y solteras que tentarán a las cinco parejas protagonistas"
+      "desc": "Con la décima temporada a punto de arrancar, conocemos a los solteros y solteras que tentarán a las cinco parejas protagonistas."
     },
     {
       "content": "video",
