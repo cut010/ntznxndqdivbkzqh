@@ -27,7 +27,6 @@ jobs:
   process:
     runs-on: ubuntu-latest
     timeout-minutes: 360
-    environment: production
 
     steps:
       - name: Checkout
