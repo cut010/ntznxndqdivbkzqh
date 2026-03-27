@@ -27,20 +27,21 @@ jobs:
   process:
     runs-on: ubuntu-latest
     timeout-minutes: 360
+    environment: github-pages
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GH_PAT || github.token }}
+          token: ${{ secrets.GH_PAT }}
 
       - name: Install ffmpeg
         run: sudo apt-get update && sudo apt-get install -y ffmpeg jq
 
       - name: Process pending videos
         env:
-          IA_ACCESS_KEY: ${{ secrets.IA_ACCESS_KEY }}
-          IA_SECRET_KEY: ${{ secrets.IA_SECRET_KEY }}
+          IA_ACCESS_KEY: ${{ secrets.IA_ACCESS_KEY || vars.IA_ACCESS_KEY }}
+          IA_SECRET_KEY: ${{ secrets.IA_SECRET_KEY || vars.IA_SECRET_KEY }}
         run: |
           chmod +x scripts/process-videos.sh
           bash scripts/process-videos.sh
