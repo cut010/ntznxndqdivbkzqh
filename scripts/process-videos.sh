@@ -58,6 +58,7 @@ for item_b64 in $items; do
   echo "Descargando..."
   if ! ffmpeg \
     -headers $'Origin: https://www.mediasetinfinity.es\r\nReferer: https://www.mediasetinfinity.es/\r\n' \
+    -fflags +igndts \
     -i "$hls_url" -c copy -bsf:a aac_adtstoasc -movflags +faststart -y "$output_path" 2>/tmp/ffmpeg.log; then
     echo "ERROR: ffmpeg fallo para ${title}"
     tail -5 /tmp/ffmpeg.log
