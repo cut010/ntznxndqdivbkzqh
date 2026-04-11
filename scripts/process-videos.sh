@@ -47,7 +47,7 @@ for item_b64 in $items; do
   title=$(echo "$data" | jq -r '.title')
   hls_url=$(echo "$data" | jq -r '.hls')
 
-  identifier="lidlt-t${season}-${category}-${contentId}"
+  identifier="${season}-${contentId}"
   filename="${identifier}.mp4"
   output_path="${TMP_DIR}/${filename}"
 
@@ -74,7 +74,7 @@ for item_b64 in $items; do
   http_code=$(curl -s --retry 3 --retry-delay 5 \
     -H "Authorization: LOW ${IA_ACCESS}:${IA_SECRET}" \
     -H "x-archive-meta-mediatype: movies" \
-    -H "x-archive-meta-title: ${title}" \
+    -H "x-archive-meta-title: ${contentId}" \
     -H "x-archive-meta-collection: opensource_movies" \
     -H "x-amz-auto-make-bucket: 1" \
     -T "$output_path" \
