@@ -227,6 +227,28 @@
       },
       "id": "T09",
       "title": "Temporada 9"
+    },
+    {
+      "content": "temporadas",
+      "tabs": [
+        {
+          "title": "Programas",
+          "id": "programas",
+          "cover": "",
+          "enable": true
+        }
+      ],
+      "tv": {
+        "programas": "",
+        "debates": ""
+      },
+      "season": "10",
+      "cover": {
+        "programas": "https://album.mediaset.es/cimg/2026/03/23/rumbo01_da39.jpg",
+        "debates": ""
+      },
+      "id": "T10",
+      "title": "Temporada 10"
     }
   ],
   "content": {
