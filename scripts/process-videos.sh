@@ -47,7 +47,7 @@ for item_b64 in $items; do
   title=$(echo "$data" | jq -r '.title')
   hls_url=$(echo "$data" | jq -r '.hls')
 
-  identifier="${season}-${contentId}"
+  identifier="lidlt-t${season}-${category}-${contentId}"
   filename="${identifier}.mp4"
   output_path="${TMP_DIR}/${filename}"
 
@@ -56,9 +56,11 @@ for item_b64 in $items; do
   echo "HLS: ${hls_url}"
 
   echo "Descargando..."
+  
   if ! ffmpeg \
+    -user_agent "AppleCoreMedia/1.0.0.25F84 (Macintosh; U; Intel Mac OS X 14_8_8; en_us)" \
     -headers $'Origin: https://www.mediasetinfinity.es\r\nReferer: https://www.mediasetinfinity.es/\r\n' \
-    -fflags +igndts \
+    -multiple_requests 1 \
     -i "$hls_url" -c copy -bsf:a aac_adtstoasc -movflags +faststart -y "$output_path" 2>/tmp/ffmpeg.log; then
     echo "ERROR: ffmpeg fallo para ${title}"
     tail -5 /tmp/ffmpeg.log
@@ -74,7 +76,7 @@ for item_b64 in $items; do
   http_code=$(curl -s --retry 3 --retry-delay 5 \
     -H "Authorization: LOW ${IA_ACCESS}:${IA_SECRET}" \
     -H "x-archive-meta-mediatype: movies" \
-    -H "x-archive-meta-title: ${contentId}" \
+    -H "x-archive-meta-title: ${title}" \
     -H "x-archive-meta-collection: opensource_movies" \
     -H "x-amz-auto-make-bucket: 1" \
     -T "$output_path" \
