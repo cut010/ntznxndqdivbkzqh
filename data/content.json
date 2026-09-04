@@ -4770,104 +4770,14 @@
               "extension": false
             }
           ],
-          "title": "true",
+          "title": "El Casting",
           "desc": "La undécima temporada de &apos;La isla de las tentaciones&apos; pone en marcha el proceso de casting en busca de nuevas parejas dispuestas a poner a prueba sus relaciones, así como de los solteros y solteras que se convertirán en sus tentaciones. Además, el exparticipante Montoya les visita y comparte su experiencia."
-        },
-        {
-          "content": "video",
-          "season": "11",
-          "image": "https://album.mediaset.es/cimg/2026/08/21/lidlt11-rumbo1_da39.jpg",
-          "contentId": "af228180-9de3-4bcd-9f09-31b2fdf8ee5b",
-          "category": "programas",
-          "id": "MDSVOD20260826_10003",
-          "video": [
-            {
-              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/d6/b7/d6b79e05-2702-4db5-9561-af53c48884f7/hls-fairplay.ism/picky.m3u8",
-              "label": "Principal",
-              "type": "hls",
-              "cast": false,
-              "extension": true
-            },
-            {
-              "url": "https://archive.org/download/lidlt-t11-programas-af228180-9de3-4bcd-9f09-31b2fdf8ee5b/lidlt-t11-programas-af228180-9de3-4bcd-9f09-31b2fdf8ee5b.mp4",
-              "label": "MP4",
-              "type": "mp4",
-              "cast": true,
-              "extension": false
-            }
-          ],
-          "title": "Rumbo 1 - Conoce a los solteros y solteras de la undécima temporada",
-          "desc": "La undécima temporada de &apos;La isla de las tentaciones&apos; está a punto de arrancar y ya puedes conocer la identidad de los solteros y solteras que van a formar el ejército de la tentación y que llegan dispuestos a encontrar el amor. Centenares de solteros y solteras nos han regalado sus encantos durante meses de casting para poder estar en ese grupo de elegidos. ¡Conócelos en este programa!"
-        },
-        {
-          "content": "video",
-          "season": "11",
-          "image": "https://album.mediaset.es/cimg/2026/08/31/rumbo-2_da39.jpg",
-          "contentId": "a642f03d-f07f-4c20-b1e1-4ccc04e7f3de",
-          "category": "programas",
-          "id": "MDSVOD20260902_10016",
-          "video": [
-            {
-              "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/ec/54/ec545c09-ec3f-4b4d-a71f-08773b467cc2/hls-fairplay.ism/picky.m3u8",
-              "label": "Principal",
-              "type": "hls",
-              "cast": false,
-              "extension": true
-            },
-            {
-              "url": "https://archive.org/download/lidlt-t11-programas-a642f03d-f07f-4c20-b1e1-4ccc04e7f3de/lidlt-t11-programas-a642f03d-f07f-4c20-b1e1-4ccc04e7f3de.mp4",
-              "label": "MP4",
-              "type": "mp4",
-              "cast": true,
-              "extension": false
-            }
-          ],
-          "title": "Rumbo 2 - Conoce a las parejas de la undécima edición",
-          "desc": "Ha llegado el momento de conocer a las cinco parejas que se enfrentan al mayor desafío de su relación en una nueva temporada de ‘La isla de las tentaciones’. Antes de poner rumbo al paraíso que pondrá a prueba su amor, descubrimos sus historias, sus dudas y sus últimos momentos juntos. Allí, separados y rodeados de tentaciones, tendrán que decidir si su relación supera la prueba de fuego… o no."
         }
       ],
       "debates": []
     }
   },
   "recents": [
-    {
-      "content": "video",
-      "season": "11",
-      "image": "https://album.mediaset.es/cimg/2026/08/31/rumbo-2_da39.jpg",
-      "contentId": "a642f03d-f07f-4c20-b1e1-4ccc04e7f3de",
-      "category": "programas",
-      "id": "MDSVOD20260902_10016",
-      "video": [
-        {
-          "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/ec/54/ec545c09-ec3f-4b4d-a71f-08773b467cc2/hls-fairplay.ism/picky.m3u8",
-          "label": "Principal",
-          "type": "hls",
-          "cast": false,
-          "extension": true
-        }
-      ],
-      "title": "Rumbo 2 - Conoce a las parejas de la undécima edición",
-      "desc": "Ha llegado el momento de conocer a las cinco parejas que se enfrentan al mayor desafío de su relación en una nueva temporada de ‘La isla de las tentaciones’. Antes de poner rumbo al paraíso que pondrá a prueba su amor, descubrimos sus historias, sus dudas y sus últimos momentos juntos. Allí, separados y rodeados de tentaciones, tendrán que decidir si su relación supera la prueba de fuego… o no."
-    },
-    {
-      "content": "video",
-      "season": "11",
-      "image": "https://album.mediaset.es/cimg/2026/08/21/lidlt11-rumbo1_da39.jpg",
-      "contentId": "af228180-9de3-4bcd-9f09-31b2fdf8ee5b",
-      "category": "programas",
-      "id": "MDSVOD20260826_10003",
-      "video": [
-        {
-          "url": "https://vbd.mediasetinfinity.es/orivod/vod/bitmovin/d6/b7/d6b79e05-2702-4db5-9561-af53c48884f7/hls-fairplay.ism/picky.m3u8",
-          "label": "Principal",
-          "type": "hls",
-          "cast": false,
-          "extension": true
-        }
-      ],
-      "title": "Rumbo 1 - Conoce a los solteros y solteras de la undécima temporada",
-      "desc": "La undécima temporada de &apos;La isla de las tentaciones&apos; está a punto de arrancar y ya puedes conocer la identidad de los solteros y solteras que van a formar el ejército de la tentación y que llegan dispuestos a encontrar el amor. Centenares de solteros y solteras nos han regalado sus encantos durante meses de casting para poder estar en ese grupo de elegidos. ¡Conócelos en este programa!"
-    },
     {
       "content": "video",
       "season": "11",
@@ -4884,7 +4794,7 @@
           "extension": true
         }
       ],
-      "title": "true",
+      "title": "El Casting",
       "desc": "La undécima temporada de &apos;La isla de las tentaciones&apos; pone en marcha el proceso de casting en busca de nuevas parejas dispuestas a poner a prueba sus relaciones, así como de los solteros y solteras que se convertirán en sus tentaciones. Además, el exparticipante Montoya les visita y comparte su experiencia."
     },
     {

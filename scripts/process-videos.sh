@@ -47,7 +47,7 @@ for item_b64 in $items; do
   title=$(echo "$data" | jq -r '.title')
   hls_url=$(echo "$data" | jq -r '.hls')
 
-  identifier="lidlt-t${season}-${category}-${contentId}"
+  identifier="${contentId}"
   filename="${identifier}.mp4"
   output_path="${TMP_DIR}/${filename}"
 
