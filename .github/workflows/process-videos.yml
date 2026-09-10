@@ -34,8 +34,8 @@ jobs:
         with:
           token: ${{ secrets.GH_PAT }}
 
-      - name: Install deps
-        run: sudo apt-get update && sudo apt-get install -y jq zip
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg jq
 
       - name: Process pending videos
         env:
