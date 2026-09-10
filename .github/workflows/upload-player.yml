@@ -1,0 +1,32 @@
+name: Upload Player (temporal)
+
+on:
+  workflow_dispatch:
+    inputs:
+      identifier:
+        description: 'Identif'
+        required: true
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Subir player.html
+        env:
+          IA_ACCESS_KEY: ${{ secrets.IA_ACCESS_KEY }}
+          IA_SECRET_KEY: ${{ secrets.IA_SECRET_KEY }}
+          ID: ${{ inputs.identifier }}
+        run: |
+          code=$(curl -s --retry 5 --retry-delay 5 --retry-all-errors \
+            -H "Authorization: LOW ${IA_ACCESS_KEY}:${IA_SECRET_KEY}" \
+            -H "x-archive-queue-derive: 0" \
+            -H "Content-Type: text/html" \
+            -T scripts/player.html \
+            "https://s3.us.archive.org/${ID}/player.html" \
+            -o /tmp/r.txt -w "%{http_code}")
+          echo "HTTP $code"
+          cat /tmp/r.txt 2>/dev/null || true
+          [ "$code" = "200" ] || exit 1
+          echo "OK -> https://archive.org/download/${ID}/player.html"

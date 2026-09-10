@@ -2,8 +2,11 @@
 set -euo pipefail
 
 CONTENT_FILE="data/content.json"
+PLAYER_SRC="scripts/player.html"
 TMP_DIR="/tmp/lidlt-process"
 mkdir -p "$TMP_DIR"
+
+[ -f "$PLAYER_SRC" ] || { echo "Falta $PLAYER_SRC"; exit 1; }
 
 IA_ACCESS="$IA_ACCESS_KEY"
 IA_SECRET="$IA_SECRET_KEY"
@@ -106,6 +109,13 @@ for item_b64 in $items; do
     FAILED=$((FAILED + 1)); rm -rf "$work_dir"; continue
   fi
 
+  echo "Subiendo player.html..."
+  code=$(ia_put "$PLAYER_SRC" "https://s3.us.archive.org/${identifier}/player.html" "text/html")
+  if [ "$code" != "200" ]; then
+    echo "ERROR: IA ${code} subiendo player.html"; cat /tmp/ia_response.txt 2>/dev/null
+    FAILED=$((FAILED + 1)); rm -rf "$work_dir"; continue
+  fi
+
   ep_error=0
   k=-1
   while IFS=$'\t' read -r vurl vinf; do
@@ -175,23 +185,23 @@ for item_b64 in $items; do
 
   if [ "$ep_error" -ne 0 ]; then FAILED=$((FAILED + 1)); rm -rf "$work_dir"; continue; fi
 
-  archive_url="https://archive.org/download/${identifier}/master.m3u8"
-  echo "Subido: ${archive_url}"
+  hls_url_ia="https://archive.org/download/${identifier}/master.m3u8"
+  embed_url="https://archive.org/download/${identifier}/player.html"
+  echo "HLS:   ${hls_url_ia}"
+  echo "Embed: ${embed_url}"
 
   jq --arg season "$season" \
      --arg category "$category" \
      --arg contentId "$contentId" \
-     --arg url "$archive_url" \
+     --arg hls "$hls_url_ia" \
+     --arg embed "$embed_url" \
      '
      .content[$season][$category] |= map(
        if .contentId == $contentId then
-         .video += [{
-           "url": $url,
-           "label": "HLS",
-           "type": "hls",
-           "cast": true,
-           "extension": false
-         }]
+         .video += [
+           { "url": $hls,   "label": "HLS",   "type": "hls",   "cast": true,  "extension": false },
+           { "url": $embed, "label": "Web",   "type": "embed", "cast": false, "extension": false }
+         ]
        else . end
      )
      ' "$CONTENT_FILE" > "${CONTENT_FILE}.tmp" && mv "${CONTENT_FILE}.tmp" "$CONTENT_FILE"
