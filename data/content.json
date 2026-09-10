@@ -4850,57 +4850,12 @@
           ],
           "title": "P1 - Arranca la prueba definitiva del amor",
           "desc": "Separadas de forma abrupta, sin apenas tiempo para despedirse y cargadas de dudas, inseguridades e incertidumbre, cinco parejas desembarcan en las paradisíacas playas de República Dominicana. Allí, bajo la sombra de la tentación, pondrán a prueba la fortaleza de su amor en el desafío más intenso de sus vidas, sin saber si lograrán salir de la isla más unidos o con su relación hecha añicos."
-        },
-        {
-          "content": "video",
-          "season": "11",
-          "image": "https://album.mediaset.es/cimg/2026/09/04/isla-2_da39.jpg",
-          "contentId": "3f16330a-5f83-4f63-907d-b6705c6541cd",
-          "category": "programas",
-          "id": "MDSVOD20260909_10021",
-          "video": [
-            {
-              "url": "https://vbd.mediaset.es/orivod/vod/bitmovin/85/23/85235bda-88ac-4b2f-b230-e7adb06a5a49/main.ism/picky.m3u8",
-              "label": "Principal",
-              "type": "hls",
-              "cast": false,
-              "extension": true
-            },
-            {
-              "url": "https://archive.org/download/3f16330a-5f83-4f63-907d-b6705c6541cd/3f16330a-5f83-4f63-907d-b6705c6541cd.mp4",
-              "label": "MP4",
-              "type": "mp4",
-              "cast": true,
-              "extension": false
-            }
-          ],
-          "title": "P2 - Las primeras imágenes desatan los reproches",
-          "desc": "Las chicas ven las primeras imágenes que llegan desde Villa Playa tras unas horas de convivencia y se quedan impactadas. Además, las parejas se reencuentran, viven la ceremonia de los collares y conocen a más tentadores, entre los que hay algunas caras muy conocidas."
         }
       ],
       "debates": []
     }
   },
   "recents": [
-    {
-      "content": "video",
-      "season": "11",
-      "image": "https://album.mediaset.es/cimg/2026/09/04/isla-2_da39.jpg",
-      "contentId": "3f16330a-5f83-4f63-907d-b6705c6541cd",
-      "category": "programas",
-      "id": "MDSVOD20260909_10021",
-      "video": [
-        {
-          "url": "https://vbd.mediaset.es/orivod/vod/bitmovin/85/23/85235bda-88ac-4b2f-b230-e7adb06a5a49/main.ism/picky.m3u8",
-          "label": "Principal",
-          "type": "hls",
-          "cast": false,
-          "extension": true
-        }
-      ],
-      "title": "P2 - Las primeras imágenes desatan los reproches",
-      "desc": "Las chicas ven las primeras imágenes que llegan desde Villa Playa tras unas horas de convivencia y se quedan impactadas. Además, las parejas se reencuentran, viven la ceremonia de los collares y conocen a más tentadores, entre los que hay algunas caras muy conocidas."
-    },
     {
       "content": "video",
       "season": "11",

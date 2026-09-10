@@ -10,13 +10,19 @@ IA_SECRET="$IA_SECRET_KEY"
 
 FILTER_SEASON="${FILTER_SEASON:-}"
 FILTER_CATEGORY="${FILTER_CATEGORY:-}"
+DL_PAR="${DL_PAR:-8}"
+UP_PAR="${UP_PAR:-6}"
+
+UA="AppleCoreMedia/1.0.0.25F84 (Macintosh; U; Intel Mac OS X 14_8_8; en_us)"
+ORIGIN="https://www.mediasetinfinity.es"
+REFERER="https://www.mediasetinfinity.es/"
+export UA ORIGIN REFERER IA_ACCESS IA_SECRET
 
 PROCESSED=0
 FAILED=0
 
 echo "FILTER_SEASON='${FILTER_SEASON}' FILTER_CATEGORY='${FILTER_CATEGORY}'"
 
-MIN_SEASON="${FILTER_SEASON:-10}"
 items=$(jq -r --arg season "$FILTER_SEASON" --arg category "$FILTER_CATEGORY" --argjson min 10 '
   [.content | to_entries[] | .key as $s |
     select(($s | tonumber) >= $min) |
@@ -25,7 +31,7 @@ items=$(jq -r --arg season "$FILTER_SEASON" --arg category "$FILTER_CATEGORY" --
     select($category == "" or $c == $category) |
     .value[] |
     select(.video | length > 0) |
-    select(.video | map(select(.type == "mp4")) | length == 0) |
+    select([.video[].url | select(test("archive.org"))] | length == 0) |
     {season: $s, category: $c, contentId: .contentId, title: .title, hls: (.video[0].url)}
   ] | .[] | @base64
 ' "$CONTENT_FILE" || true)
@@ -46,89 +52,123 @@ for item_b64 in $items; do
   title=$(echo "$data" | jq -r '.title')
   hls_url=$(echo "$data" | jq -r '.hls')
 
-  identifier="lidlt-t${season}-${category}-${contentId}"
-  filename="${identifier}.mp4"
-  output_path="${TMP_DIR}/${filename}"
+  identifier="${contentId}"
+  work_dir="${TMP_DIR}/${identifier}"
+  rm -rf "$work_dir"; mkdir -p "$work_dir"
 
   echo ""
   echo "=== Procesando: ${title} (T${season} ${category} #${contentId}) ==="
-  echo "HLS: ${hls_url}"
+  echo "HLS master: ${hls_url}"
 
-  echo "Descargando..."
+  base_master="${hls_url%/*}"
 
-  UA="AppleCoreMedia/1.0.0.25F84 (Macintosh; U; Intel Mac OS X 14_8_8; en_us)"
+  curl -s -A "$UA" -H "Origin: $ORIGIN" -H "Referer: $REFERER" "$hls_url" \
+    | tr -d '\r' \
+    | awk '
+        /^#EXT-X-STREAM-INF:/ {
+          inf=$0; gsub(/,?AUDIO="[^"]*"/,"",inf);
+          getline u; if (u ~ /^#/ || u=="") next;
+          print u "\t" inf;
+        }' > "$work_dir/variants.txt"
 
-  master=$(curl -s \
-    -A "$UA" \
-    -H "Origin: https://www.mediasetinfinity.es" \
-    -H "Referer: https://www.mediasetinfinity.es/" \
-    "$hls_url")
-  variant=$(echo "$master" | tr -d '\r' | awk '
-    /^#EXT-X-STREAM-INF:/ {
-      h=0; bw=0;
-      if (match($0,/RESOLUTION=[0-9]+x[0-9]+/)) { s=substr($0,RSTART,RLENGTH); sub(/RESOLUTION=[0-9]+x/,"",s); h=s+0; }
-      if (match($0,/BANDWIDTH=[0-9]+/))         { s=substr($0,RSTART,RLENGTH); sub(/BANDWIDTH=/,"",s);        bw=s+0; }
-      getline u;
-      if (u ~ /^#/ || u=="") next;
-      n++; H[n]=h; B[n]=bw; U[n]=u;
-    }
-    END {
-      best=0;
-      for (i=1;i<=n;i++) if (H[i]>=1080 && (best==0 || B[i]<B[best])) best=i;
-      if (best==0) for (i=1;i<=n;i++) if (best==0 || H[i]>H[best]) best=i;
-      if (best>0) print U[best];
-    }')
-  if [ -n "$variant" ]; then
-    case "$variant" in
-      http*) stream_url="$variant" ;;
-      *)     stream_url="${hls_url%/*}/${variant}" ;;
+  if [ ! -s "$work_dir/variants.txt" ]; then
+    echo "ERROR: no se encontraron variantes en el master"; FAILED=$((FAILED + 1)); rm -rf "$work_dir"; continue
+  fi
+
+  : > "$work_dir/dl.txt"
+  {
+    echo "#EXTM3U"
+    echo "#EXT-X-VERSION:4"
+    echo "#EXT-X-INDEPENDENT-SEGMENTS"
+  } > "$work_dir/master.m3u8"
+
+  k=-1
+  ep_error=0
+  while IFS=$'\t' read -r vurl vinf; do
+    k=$((k + 1))
+    case "$vurl" in
+      http*) vabs="$vurl" ;;
+      *)     vabs="${base_master}/${vurl}" ;;
     esac
-    echo "Variante: ${stream_url}"
-  else
-    stream_url="$hls_url"
+    vbase="${vabs%/*}"
+
+    vpl=$(curl -s -A "$UA" -H "Origin: $ORIGIN" -H "Referer: $REFERER" "$vabs" | tr -d '\r')
+    if [ -z "$vpl" ]; then echo "ERROR: variante $k vacía"; ep_error=1; break; fi
+    if echo "$vpl" | grep -q "EXT-X-KEY"; then echo "ERROR: variante $k cifrada (EXT-X-KEY)"; ep_error=1; break; fi
+
+    : > "$work_dir/v${k}.m3u8"
+    i=0
+    while IFS= read -r line; do
+      case "$line" in
+        "#"*|"") printf '%s\n' "$line" >> "$work_dir/v${k}.m3u8" ;;
+        *)
+          i=$((i + 1)); seg="v${k}_seg${i}.ts"
+          case "$line" in http*) segu="$line" ;; *) segu="${vbase}/${line}" ;; esac
+          printf '%s %s\n' "$segu" "$work_dir/$seg" >> "$work_dir/dl.txt"
+          printf '%s\n' "$seg" >> "$work_dir/v${k}.m3u8" ;;
+      esac
+    done <<< "$vpl"
+
+    if [ "$i" -eq 0 ]; then echo "ERROR: variante $k sin segmentos"; ep_error=1; break; fi
+
+    printf '%s\n%s\n' "$vinf" "v${k}.m3u8" >> "$work_dir/master.m3u8"
+    echo "  variante ${k}: ${i} segmentos"
+  done < "$work_dir/variants.txt"
+
+  if [ "$ep_error" -ne 0 ]; then FAILED=$((FAILED + 1)); rm -rf "$work_dir"; continue; fi
+
+  nseg=$(wc -l < "$work_dir/dl.txt" | tr -d ' ')
+  echo "Total segmentos (todas las calidades): ${nseg}. Descargando (paralelo x${DL_PAR})..."
+
+  if ! xargs -P "$DL_PAR" -L 1 bash -c '
+        curl -s --retry 3 --retry-delay 2 -f \
+          -A "$UA" -H "Origin: $ORIGIN" -H "Referer: $REFERER" \
+          -o "$2" "$1"
+      ' _ < "$work_dir/dl.txt"; then
+    echo "ERROR: falló alguna descarga de segmentos"; FAILED=$((FAILED + 1)); rm -rf "$work_dir"; continue
   fi
 
-
-  if ! ffmpeg \
-    -user_agent "$UA" \
-    -headers $'Origin: https://www.mediasetinfinity.es\r\nReferer: https://www.mediasetinfinity.es/\r\n' \
-    -multiple_requests 1 \
-    -fflags +genpts \
-    -i "$stream_url" \
-    -map 0:v:0 -map 0:a:0 \
-    -c:v libx264 -preset veryfast -crf 20 -fps_mode cfr -pix_fmt yuv420p \
-    -c:a aac -b:a 128k -af aresample=async=1 \
-    -movflags +faststart -y "$output_path" 2>/tmp/ffmpeg.log; then
-    echo "ERROR: ffmpeg fallo para ${title}"
-    tail -5 /tmp/ffmpeg.log
-    FAILED=$((FAILED + 1))
-    rm -f "$output_path"
-    continue
+  empty=$(find "$work_dir" -name 'v*_seg*.ts' -empty | wc -l | tr -d ' ')
+  if [ "$empty" -ne 0 ]; then
+    echo "ERROR: ${empty} segmentos vacíos tras la descarga"; FAILED=$((FAILED + 1)); rm -rf "$work_dir"; continue
   fi
+  total_size=$(du -sh "$work_dir" | cut -f1)
+  echo "Descargado: ${total_size}."
 
-  filesize=$(du -h "$output_path" | cut -f1)
-  echo "Descargado: ${filesize}"
-
-  echo "Subiendo a Archive.org..."
-  http_code=$(curl -s --retry 3 --retry-delay 5 \
+  echo "Subiendo master.m3u8 (crea el item)..."
+  code=$(curl -s --retry 3 --retry-delay 5 \
     -H "Authorization: LOW ${IA_ACCESS}:${IA_SECRET}" \
+    -H "x-amz-auto-make-bucket: 1" \
+    -H "x-archive-queue-derive: 0" \
     -H "x-archive-meta-mediatype: movies" \
     -H "x-archive-meta-title: ${title}" \
     -H "x-archive-meta-collection: opensource_movies" \
-    -H "x-amz-auto-make-bucket: 1" \
-    -T "$output_path" \
-    "https://s3.us.archive.org/${identifier}/${filename}" \
+    -H "Content-Type: application/vnd.apple.mpegurl" \
+    -T "$work_dir/master.m3u8" \
+    "https://s3.us.archive.org/${identifier}/master.m3u8" \
     -o /tmp/ia_response.txt -w "%{http_code}")
-
-  if [ "$http_code" != "200" ]; then
-    echo "ERROR: Archive.org respondio ${http_code} para ${title}"
-    cat /tmp/ia_response.txt 2>/dev/null
-    FAILED=$((FAILED + 1))
-    rm -f "$output_path"
-    continue
+  if [ "$code" != "200" ]; then
+    echo "ERROR: IA respondió ${code} al crear el item"; cat /tmp/ia_response.txt 2>/dev/null
+    FAILED=$((FAILED + 1)); rm -rf "$work_dir"; continue
   fi
 
-  archive_url="https://archive.org/download/${identifier}/${filename}"
+  echo "Subiendo variantes + segmentos (paralelo x${UP_PAR})..."
+  up_fail=$(find "$work_dir" \( -name 'v*.m3u8' -o -name 'v*_seg*.ts' \) \
+    | ID="$identifier" xargs -P "$UP_PAR" -I{} bash -c '
+        f="{}"; b=$(basename "$f")
+        case "$b" in *.m3u8) ct="application/vnd.apple.mpegurl";; *) ct="video/mp2t";; esac
+        c=$(curl -s --retry 3 --retry-delay 3 \
+          -H "Authorization: LOW ${IA_ACCESS}:${IA_SECRET}" \
+          -H "x-archive-queue-derive: 0" \
+          -H "Content-Type: $ct" \
+          -T "$f" "https://s3.us.archive.org/${ID}/$b" -o /dev/null -w "%{http_code}")
+        [ "$c" = "200" ] || echo "x"
+      ' | grep -c "x" || true)
+  if [ "$up_fail" -ne 0 ]; then
+    echo "ERROR: fallaron ${up_fail} subidas"; FAILED=$((FAILED + 1)); rm -rf "$work_dir"; continue
+  fi
+
+  archive_url="https://archive.org/download/${identifier}/master.m3u8"
   echo "Subido: ${archive_url}"
 
   jq --arg season "$season" \
@@ -140,8 +180,8 @@ for item_b64 in $items; do
        if .contentId == $contentId then
          .video += [{
            "url": $url,
-           "label": "MP4",
-           "type": "mp4",
+           "label": "HLS",
+           "type": "hls",
            "cast": true,
            "extension": false
          }]
@@ -151,8 +191,7 @@ for item_b64 in $items; do
 
   echo "JSON actualizado."
   PROCESSED=$((PROCESSED + 1))
-
-  rm -f "$output_path"
+  rm -rf "$work_dir"
   echo "=== Completado: ${title} ==="
 done
 
