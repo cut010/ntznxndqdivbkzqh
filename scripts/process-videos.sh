@@ -11,15 +11,23 @@ IA_SECRET="$IA_SECRET_KEY"
 FILTER_SEASON="${FILTER_SEASON:-}"
 FILTER_CATEGORY="${FILTER_CATEGORY:-}"
 DL_PAR="${DL_PAR:-8}"
-UP_PAR="${UP_PAR:-6}"
 
 UA="AppleCoreMedia/1.0.0.25F84 (Macintosh; U; Intel Mac OS X 14_8_8; en_us)"
 ORIGIN="https://www.mediasetinfinity.es"
 REFERER="https://www.mediasetinfinity.es/"
-export UA ORIGIN REFERER IA_ACCESS IA_SECRET
+export UA ORIGIN REFERER
 
 PROCESSED=0
 FAILED=0
+
+ia_put() {
+  curl -s --retry 5 --retry-delay 5 --retry-all-errors \
+    -H "Authorization: LOW ${IA_ACCESS}:${IA_SECRET}" \
+    -H "x-archive-queue-derive: 0" \
+    -H "Content-Type: $3" \
+    "${@:4}" \
+    -T "$1" "$2" -o /tmp/ia_response.txt -w "%{http_code}"
+}
 
 echo "FILTER_SEASON='${FILTER_SEASON}' FILTER_CATEGORY='${FILTER_CATEGORY}'"
 
@@ -75,15 +83,31 @@ for item_b64 in $items; do
     echo "ERROR: no se encontraron variantes en el master"; FAILED=$((FAILED + 1)); rm -rf "$work_dir"; continue
   fi
 
-  : > "$work_dir/dl.txt"
   {
     echo "#EXTM3U"
     echo "#EXT-X-VERSION:4"
     echo "#EXT-X-INDEPENDENT-SEGMENTS"
   } > "$work_dir/master.m3u8"
-
   k=-1
+  while IFS=$'\t' read -r vurl vinf; do
+    k=$((k + 1))
+    printf '%s\n%s\n' "$vinf" "v${k}.m3u8" >> "$work_dir/master.m3u8"
+  done < "$work_dir/variants.txt"
+
+  echo "Subiendo master.m3u8 (crea el item)..."
+  code=$(ia_put "$work_dir/master.m3u8" "https://s3.us.archive.org/${identifier}/master.m3u8" \
+    "application/vnd.apple.mpegurl" \
+    -H "x-amz-auto-make-bucket: 1" \
+    -H "x-archive-meta-mediatype: movies" \
+    -H "x-archive-meta-title: ${title}" \
+    -H "x-archive-meta-collection: opensource_movies")
+  if [ "$code" != "200" ]; then
+    echo "ERROR: IA respondió ${code} al crear el item"; cat /tmp/ia_response.txt 2>/dev/null
+    FAILED=$((FAILED + 1)); rm -rf "$work_dir"; continue
+  fi
+
   ep_error=0
+  k=-1
   while IFS=$'\t' read -r vurl vinf; do
     k=$((k + 1))
     case "$vurl" in
@@ -92,81 +116,64 @@ for item_b64 in $items; do
     esac
     vbase="${vabs%/*}"
 
-    vpl=$(curl -s -A "$UA" -H "Origin: $ORIGIN" -H "Referer: $REFERER" "$vabs" | tr -d '\r')
-    if [ -z "$vpl" ]; then echo "ERROR: variante $k vacía"; ep_error=1; break; fi
-    if echo "$vpl" | grep -q "EXT-X-KEY"; then echo "ERROR: variante $k cifrada (EXT-X-KEY)"; ep_error=1; break; fi
+    curl -s -A "$UA" -H "Origin: $ORIGIN" -H "Referer: $REFERER" "$vabs" | tr -d '\r' > "$work_dir/src_${k}.m3u8"
+    if [ ! -s "$work_dir/src_${k}.m3u8" ]; then echo "ERROR: variante $k vacía"; ep_error=1; break; fi
+    if grep -q "EXT-X-KEY" "$work_dir/src_${k}.m3u8"; then echo "ERROR: variante $k cifrada (EXT-X-KEY)"; ep_error=1; break; fi
 
-    : > "$work_dir/v${k}.m3u8"
+    : > "$work_dir/dl_${k}.txt"
     i=0
+    while IFS= read -r line; do
+      case "$line" in
+        "#"*|"") : ;;
+        *)
+          i=$((i + 1))
+          case "$line" in http*) segu="$line" ;; *) segu="${vbase}/${line}" ;; esac
+          printf '%s %s\n' "$segu" "$work_dir/tmp_${k}_${i}.ts" >> "$work_dir/dl_${k}.txt"
+          ;;
+      esac
+    done < "$work_dir/src_${k}.m3u8"
+    nseg=$i
+    if [ "$nseg" -eq 0 ]; then echo "ERROR: variante $k sin segmentos"; ep_error=1; break; fi
+
+    echo "  variante ${k}: ${nseg} segmentos, descargando (x${DL_PAR})..."
+    if ! xargs -P "$DL_PAR" -L 1 bash -c '
+          curl -s --retry 3 --retry-delay 2 -f \
+            -A "$UA" -H "Origin: $ORIGIN" -H "Referer: $REFERER" \
+            -o "$2" "$1"
+        ' _ < "$work_dir/dl_${k}.txt"; then
+      echo "ERROR: falló descarga en variante $k"; ep_error=1; break
+    fi
+
+    : > "$work_dir/v${k}.ts"
+    : > "$work_dir/v${k}.m3u8"
+    i=0; off=0
     while IFS= read -r line; do
       case "$line" in
         "#"*|"") printf '%s\n' "$line" >> "$work_dir/v${k}.m3u8" ;;
         *)
-          i=$((i + 1)); seg="v${k}_seg${i}.ts"
-          case "$line" in http*) segu="$line" ;; *) segu="${vbase}/${line}" ;; esac
-          printf '%s %s\n' "$segu" "$work_dir/$seg" >> "$work_dir/dl.txt"
-          printf '%s\n' "$seg" >> "$work_dir/v${k}.m3u8" ;;
+          i=$((i + 1)); tmp="$work_dir/tmp_${k}_${i}.ts"
+          if [ ! -s "$tmp" ]; then echo "ERROR: segmento vacío $tmp"; ep_error=1; break; fi
+          sz=$(wc -c < "$tmp" | tr -d '[:space:]')
+          cat "$tmp" >> "$work_dir/v${k}.ts"
+          printf '#EXT-X-BYTERANGE:%s@%s\nv%s.ts\n' "$sz" "$off" "$k" >> "$work_dir/v${k}.m3u8"
+          off=$((off + sz))
+          rm -f "$tmp"
+          ;;
       esac
-    done <<< "$vpl"
+    done < "$work_dir/src_${k}.m3u8"
+    if [ "$ep_error" -ne 0 ]; then break; fi
 
-    if [ "$i" -eq 0 ]; then echo "ERROR: variante $k sin segmentos"; ep_error=1; break; fi
+    vsize=$(wc -c < "$work_dir/v${k}.ts")
+    echo "  variante ${k}: v${k}.ts = $((vsize / 1024 / 1024)) MB, subiendo..."
+    code=$(ia_put "$work_dir/v${k}.ts" "https://s3.us.archive.org/${identifier}/v${k}.ts" "video/mp2t")
+    if [ "$code" != "200" ]; then echo "ERROR: IA ${code} subiendo v${k}.ts"; cat /tmp/ia_response.txt 2>/dev/null; ep_error=1; break; fi
+    code=$(ia_put "$work_dir/v${k}.m3u8" "https://s3.us.archive.org/${identifier}/v${k}.m3u8" "application/vnd.apple.mpegurl")
+    if [ "$code" != "200" ]; then echo "ERROR: IA ${code} subiendo v${k}.m3u8"; cat /tmp/ia_response.txt 2>/dev/null; ep_error=1; break; fi
 
-    printf '%s\n%s\n' "$vinf" "v${k}.m3u8" >> "$work_dir/master.m3u8"
-    echo "  variante ${k}: ${i} segmentos"
+    rm -f "$work_dir/v${k}.ts"
   done < "$work_dir/variants.txt"
 
   if [ "$ep_error" -ne 0 ]; then FAILED=$((FAILED + 1)); rm -rf "$work_dir"; continue; fi
-
-  nseg=$(wc -l < "$work_dir/dl.txt" | tr -d ' ')
-  echo "Total segmentos (todas las calidades): ${nseg}. Descargando (paralelo x${DL_PAR})..."
-
-  if ! xargs -P "$DL_PAR" -L 1 bash -c '
-        curl -s --retry 3 --retry-delay 2 -f \
-          -A "$UA" -H "Origin: $ORIGIN" -H "Referer: $REFERER" \
-          -o "$2" "$1"
-      ' _ < "$work_dir/dl.txt"; then
-    echo "ERROR: falló alguna descarga de segmentos"; FAILED=$((FAILED + 1)); rm -rf "$work_dir"; continue
-  fi
-
-  empty=$(find "$work_dir" -name 'v*_seg*.ts' -empty | wc -l | tr -d ' ')
-  if [ "$empty" -ne 0 ]; then
-    echo "ERROR: ${empty} segmentos vacíos tras la descarga"; FAILED=$((FAILED + 1)); rm -rf "$work_dir"; continue
-  fi
-  total_size=$(du -sh "$work_dir" | cut -f1)
-  echo "Descargado: ${total_size}."
-
-  echo "Subiendo master.m3u8 (crea el item)..."
-  code=$(curl -s --retry 3 --retry-delay 5 \
-    -H "Authorization: LOW ${IA_ACCESS}:${IA_SECRET}" \
-    -H "x-amz-auto-make-bucket: 1" \
-    -H "x-archive-queue-derive: 0" \
-    -H "x-archive-meta-mediatype: movies" \
-    -H "x-archive-meta-title: ${title}" \
-    -H "x-archive-meta-collection: opensource_movies" \
-    -H "Content-Type: application/vnd.apple.mpegurl" \
-    -T "$work_dir/master.m3u8" \
-    "https://s3.us.archive.org/${identifier}/master.m3u8" \
-    -o /tmp/ia_response.txt -w "%{http_code}")
-  if [ "$code" != "200" ]; then
-    echo "ERROR: IA respondió ${code} al crear el item"; cat /tmp/ia_response.txt 2>/dev/null
-    FAILED=$((FAILED + 1)); rm -rf "$work_dir"; continue
-  fi
-
-  echo "Subiendo variantes + segmentos (paralelo x${UP_PAR})..."
-  up_fail=$(find "$work_dir" \( -name 'v*.m3u8' -o -name 'v*_seg*.ts' \) \
-    | ID="$identifier" xargs -P "$UP_PAR" -I{} bash -c '
-        f="{}"; b=$(basename "$f")
-        case "$b" in *.m3u8) ct="application/vnd.apple.mpegurl";; *) ct="video/mp2t";; esac
-        c=$(curl -s --retry 3 --retry-delay 3 \
-          -H "Authorization: LOW ${IA_ACCESS}:${IA_SECRET}" \
-          -H "x-archive-queue-derive: 0" \
-          -H "Content-Type: $ct" \
-          -T "$f" "https://s3.us.archive.org/${ID}/$b" -o /dev/null -w "%{http_code}")
-        [ "$c" = "200" ] || echo "x"
-      ' | grep -c "x" || true)
-  if [ "$up_fail" -ne 0 ]; then
-    echo "ERROR: fallaron ${up_fail} subidas"; FAILED=$((FAILED + 1)); rm -rf "$work_dir"; continue
-  fi
 
   archive_url="https://archive.org/download/${identifier}/master.m3u8"
   echo "Subido: ${archive_url}"
