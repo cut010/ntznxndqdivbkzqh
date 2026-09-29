@@ -4992,7 +4992,7 @@
             {
               "url": "https://archive.org/download/jellow/jellow.mp4",
               "label": "Principal",
-              "type": "hls",
+              "type": "mp4",
               "cast": false,
               "extension": false
             }
