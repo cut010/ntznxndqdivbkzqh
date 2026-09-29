@@ -4994,7 +4994,7 @@
               "label": "Principal",
               "type": "hls",
               "cast": false,
-              "extension": true
+              "extension": false
             }
           ],
           "title": "P7 - Nacho llega a su límite",
@@ -5071,7 +5071,7 @@
           "label": "Principal",
           "type": "hls",
           "cast": false,
-          "extension": true
+          "extension": false
         }
       ],
       "title": "P7 - Nacho llega a su límite",
