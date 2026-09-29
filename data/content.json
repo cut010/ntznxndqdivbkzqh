@@ -4990,7 +4990,7 @@
           "id": "MDSVOD20260928_10029",
           "video": [
             {
-              "url": "https://cors.archive.org/cors/jellow/jellow.mp4",
+              "url": "https://archive.org/download/jellow/jellow.mp4",
               "label": "Principal",
               "type": "hls",
               "cast": false,
@@ -5067,7 +5067,7 @@
       "id": "MDSVOD20260928_10029",
       "video": [
         {
-          "url": "https://cors.archive.org/cors/jellow/jellow.mp4",
+          "url": "https://archive.org/download/jellow/jellow.mp4",
           "label": "Principal",
           "type": "hls",
           "cast": false,
