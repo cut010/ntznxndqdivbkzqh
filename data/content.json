@@ -4991,9 +4991,9 @@
           "video": [
             {
               "url": "https://archive.org/download/jellow/jellow.mp4",
-              "label": "Principal",
+              "label": "MP4",
               "type": "mp4",
-              "cast": false,
+              "cast": true,
               "extension": false
             }
           ],
@@ -5068,9 +5068,9 @@
       "video": [
         {
           "url": "https://archive.org/download/jellow/jellow.mp4",
-          "label": "Principal",
-          "type": "hls",
-          "cast": false,
+          "label": "MP4",
+          "type": "mp4",
+          "cast": true,
           "extension": false
         }
       ],
